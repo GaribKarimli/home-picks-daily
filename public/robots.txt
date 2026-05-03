@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://home-picks-daily.vercel.app/sitemap-index.xml

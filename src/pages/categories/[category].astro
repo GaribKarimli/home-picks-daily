@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import ProductCard from '../../components/ProductCard.astro';
+
+export async function getStaticPaths() {
+  const categories = {
+    'kitchen-gadgets': { name: 'Kitchen Gadgets', description: 'Smart tools and appliances that make cooking easier, faster, and more enjoyable.' },
+    'living-room-decor': { name: 'Living Room Decor', description: 'Stylish accents, furniture, and decor to create a warm and inviting living space.' },
+    'organization-hacks': { name: 'Organization Hacks', description: 'Clever storage solutions and organization products for every room in your home.' },
+  };
+  return Object.entries(categories).map(([slug, cat]) => ({
+    params: { category: slug },
+    props: { categoryName: cat.name, categoryDescription: cat.description },
+  }));
+}
+
+const { categoryName, categoryDescription } = Astro.props;
+const allPosts = await getCollection('posts');
+const posts = allPosts.filter(p => p.data.category === categoryName);
+posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<BaseLayout
+  title={categoryName}
+  description={`Browse our collection of ${categoryName.toLowerCase()}. ${categoryDescription || ''}`}
+>
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <nav class="text-sm text-gray-400 mb-6">
+      <a href="/" class="hover:text-brand-500 transition-colors">Home</a>
+      <span class="mx-2">/</span>
+      <a href="/categories/" class="hover:text-brand-500 transition-colors">Categories</a>
+      <span class="mx-2">/</span>
+      <span class="text-dark font-medium">{categoryName}</span>
+    </nav>
+
+    <h1 class="text-3xl md:text-4xl font-bold text-dark mb-2">{categoryName}</h1>
+    <p class="text-gray-500 mb-10">{categoryDescription}</p>
+
+    {posts.length > 0 ? (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map(post => <ProductCard post={post} />)}
+      </div>
+    ) : (
+      <div class="text-center py-16">
+        <p class="text-gray-400 text-lg">No products in this category yet.</p>
+        <p class="text-gray-400 text-sm mt-2">Check back soon for new additions!</p>
+        <a href="/" class="inline-block mt-6 text-brand-500 font-medium hover:text-brand-600 transition-colors">
+          &larr; Back to Home
+        </a>
+      </div>
+    )}
+  </div>
+</BaseLayout>

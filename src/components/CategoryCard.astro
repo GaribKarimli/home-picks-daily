@@ -1,0 +1,24 @@
+---
+interface Props {
+  name: string;
+  slug: string;
+  description: string;
+}
+
+const { name, slug, description } = Astro.props;
+---
+
+<a
+  href={`/categories/${slug}/`}
+  class="block bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all group border border-gray-100"
+>
+  <h3 class="text-lg font-semibold text-dark group-hover:text-brand-500 transition-colors">
+    {name}
+  </h3>
+  <p class="text-sm text-gray-500 mt-1 leading-relaxed">
+    {description}
+  </p>
+  <span class="text-sm font-medium text-brand-500 mt-3 inline-block group-hover:translate-x-1 transition-transform">
+    Browse &rarr;
+  </span>
+</a>

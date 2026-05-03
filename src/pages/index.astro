@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import ProductCard from '../components/ProductCard.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+
+const posts = await getCollection('posts');
+posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const categories = [
+  { name: 'Kitchen Gadgets', slug: 'kitchen-gadgets', description: 'Smart tools and appliances for your kitchen' },
+  { name: 'Living Room Decor', slug: 'living-room-decor', description: 'Cozy accents to elevate your space' },
+  { name: 'Organization Hacks', slug: 'organization-hacks', description: 'Clever solutions for a clutter-free home' },
+];
+---
+
+<BaseLayout
+  title="Home Finds — Curated Home &amp; Kitchen Products"
+  description="Discover the best home and kitchen products. Curated kitchen gadgets, living room decor, and organization hacks — all in one place."
+>
+  <section class="bg-gradient-to-b from-brand-50/50 to-cream py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-dark tracking-tight">
+        Home Finds You'll
+        <span class="text-brand-500">Love</span>
+      </h1>
+      <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+        Curated kitchen gadgets, living room decor, and organization hacks — all in one place.
+        Every product, handpicked for your home.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 -mt-8 pb-14">
+    <div class="grid md:grid-cols-3 gap-4">
+      {categories.map(cat => (
+        <CategoryCard name={cat.name} slug={cat.slug} description={cat.description} />
+      ))}
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 pb-16">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-2xl font-bold text-dark">Latest Finds</h2>
+      <a href="/categories/" class="text-sm font-medium text-brand-500 hover:text-brand-600 transition-colors">
+        View All Categories &rarr;
+      </a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {posts.map(post => <ProductCard post={post} />)}
+    </div>
+  </section>
+</BaseLayout>

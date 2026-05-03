@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryCard from '../../components/CategoryCard.astro';
+
+const categories = [
+  { name: 'Kitchen Gadgets', slug: 'kitchen-gadgets', description: 'Smart tools and appliances that make cooking easier, faster, and more enjoyable.' },
+  { name: 'Living Room Decor', slug: 'living-room-decor', description: 'Stylish accents, furniture, and decor to create a warm and inviting living space.' },
+  { name: 'Organization Hacks', slug: 'organization-hacks', description: 'Clever storage solutions and organization products for every room in your home.' },
+];
+---
+
+<BaseLayout title="Categories" description="Browse our curated categories of home and kitchen products.">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold text-dark mb-2">Shop by Category</h1>
+    <p class="text-gray-500 mb-10">Find exactly what you're looking for.</p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {categories.map(cat => (
+        <CategoryCard name={cat.name} slug={cat.slug} description={cat.description} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>
