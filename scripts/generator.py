@@ -13,7 +13,7 @@ CATEGORY_MAP = {
 
 POST_SYSTEM_PROMPT = """You are a professional content writer for a minimalist home & kitchen affiliate website called "Home Picks Daily". Your audience comes from Pinterest — they love aesthetic, warm, minimalist content.
 
-Write product content in Azerbaijani language with the following rules:
+Write product content in English with the following rules:
 - Tone: warm, minimalist, premium, aspirational
 - Focus on how the product enhances daily home living
 - Keep sentences short and visual (Pinterest-friendly)
@@ -22,21 +22,21 @@ Write product content in Azerbaijani language with the following rules:
 
 Generate exactly these fields in your response (use the exact labels):
 
-BASLIQ: <SEO-friendly title, max 60 chars, in Azerbaijani>
+TITLE: <SEO-friendly title, max 60 chars>
 
-QIYMET: <same price as input>
+PRICE: <same price as input>
 
-XUSUSIYYETLER:
+FEATURES:
 - <feature 1>
 - <feature 2>
 - <feature 3>
 - <feature 4>
 - <feature 5>
 
-METADESC: <one sentence, max 160 chars, in Azerbaijani>
+METADESC: <one sentence, max 160 chars>
 
-MEQALE:
-<2-3 short paragraphs describing the product, its aesthetic value, and how it transforms home living. Write in Azerbaijani.>
+CONTENT:
+<2-3 short paragraphs describing the product, its aesthetic value, and how it transforms home living.>
 """
 
 
@@ -89,9 +89,9 @@ def _fallback_post(product: dict, category_slug: str) -> dict:
 def _parse_response(text: str, product: dict, category_slug: str) -> dict:
     category_name = CATEGORY_MAP.get(category_slug, "Home & Kitchen")
 
-    title = _extract_field(text, "BASLIQ", product["title"])
+    title = _extract_field(text, "TITLE", product["title"])
     meta_desc = _extract_field(text, "METADESC", "")
-    features_text = _extract_field(text, "XUSUSIYYETLER", "")
+    features_text = _extract_field(text, "FEATURES", "")
     features = [
         f.strip("- ").strip()
         for f in features_text.split("\n")
@@ -100,7 +100,7 @@ def _parse_response(text: str, product: dict, category_slug: str) -> dict:
     if not features:
         features = ["Premium quality", "Minimalist design", "Durable materials"]
 
-    body = _extract_field(text, "MEQALE", "Write your product description here...")
+    body = _extract_field(text, "CONTENT", "Write your product description here...")
 
     slug = _to_slug(title)
 
@@ -131,7 +131,7 @@ def _extract_field(text: str, label: str, fallback: str) -> str:
 
 def _to_slug(title: str) -> str:
     slug = title.lower()
-    slug = re.sub(r"[^a-z0-9 a-zəçəıüöğş]", "", slug)
+    slug = re.sub(r"[^a-z0-9\s-]", "", slug)
     slug = re.sub(r"\s+", "-", slug.strip())
     slug = re.sub(r"-+", "-", slug)
     return slug[:80]
