@@ -56,7 +56,7 @@ def generate_post(product: dict, category_slug: str) -> dict:
         client = genai.Client(api_key=Config.GEMINI_API_KEY)
         prompt = _build_product_prompt(product)
         response = client.models.generate_content(
-            model="gemini-1.5-flash",
+            model="gemini-2.0-flash",
             contents=prompt,
         )
         text = response.text.strip()
