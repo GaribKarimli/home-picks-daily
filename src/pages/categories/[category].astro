@@ -25,27 +25,27 @@ posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).get
   title={categoryName}
   description={`Browse our collection of ${categoryName.toLowerCase()}. ${categoryDescription || ''}`}
 >
-  <div class="max-w-6xl mx-auto px-4 py-12">
-    <nav class="text-sm text-gray-400 mb-6">
+  <div class="max-w-6xl mx-auto px-4 py-16">
+    <nav class="text-sm text-dark/40 mb-8 font-sans">
       <a href="/" class="hover:text-brand-500 transition-colors">Home</a>
       <span class="mx-2">/</span>
       <a href="/categories/" class="hover:text-brand-500 transition-colors">Categories</a>
       <span class="mx-2">/</span>
-      <span class="text-dark font-medium">{categoryName}</span>
+      <span class="text-dark/70 font-medium">{categoryName}</span>
     </nav>
 
-    <h1 class="text-3xl md:text-4xl font-bold text-dark mb-2">{categoryName}</h1>
-    <p class="text-gray-500 mb-10">{categoryDescription}</p>
+    <h1 class="text-3xl md:text-4xl font-display font-bold text-dark mb-2">{categoryName}</h1>
+    <p class="text-dark/50 mb-12">{categoryDescription}</p>
 
     {posts.length > 0 ? (
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {posts.map(post => <ProductCard post={post} />)}
       </div>
     ) : (
       <div class="text-center py-16">
-        <p class="text-gray-400 text-lg">No products in this category yet.</p>
-        <p class="text-gray-400 text-sm mt-2">Check back soon for new additions!</p>
-        <a href="/" class="inline-block mt-6 text-brand-500 font-medium hover:text-brand-600 transition-colors">
+        <p class="text-dark/40 text-lg">No products in this category yet.</p>
+        <p class="text-dark/30 text-sm mt-2">Check back soon for new additions!</p>
+        <a href="/" class="inline-block mt-6 text-accent-500 font-medium hover:text-accent-600 transition-colors">
           &larr; Back to Home
         </a>
       </div>

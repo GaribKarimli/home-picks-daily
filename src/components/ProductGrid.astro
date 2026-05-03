@@ -11,10 +11,10 @@ const { posts } = Astro.props;
 
 {
   posts.length > 0 ? (
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       {posts.map(post => <ProductCard post={post} />)}
     </div>
   ) : (
-    <p class="text-center text-gray-400 py-12">No products found in this category yet. Check back soon!</p>
+    <p class="text-center text-dark/30 py-16">No products found in this category yet. Check back soon!</p>
   )
 }

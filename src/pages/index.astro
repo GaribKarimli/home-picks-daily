@@ -18,20 +18,20 @@ const categories = [
   title="Home Finds — Curated Home &amp; Kitchen Products"
   description="Discover the best home and kitchen products. Curated kitchen gadgets, living room decor, and organization hacks — all in one place."
 >
-  <section class="bg-gradient-to-b from-brand-50/50 to-cream py-16 md:py-24">
+  <section class="bg-gradient-to-b from-blush via-cream to-cream py-20 md:py-28">
     <div class="max-w-6xl mx-auto px-4 text-center">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-dark tracking-tight">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-dark tracking-tight leading-tight">
         Home Finds You'll
-        <span class="text-brand-500">Love</span>
+        <span class="text-accent-500 italic">Love</span>
       </h1>
-      <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+      <p class="mt-4 text-base md:text-lg text-dark/50 max-w-2xl mx-auto leading-relaxed font-sans">
         Curated kitchen gadgets, living room decor, and organization hacks — all in one place.
         Every product, handpicked for your home.
       </p>
     </div>
   </section>
 
-  <section class="max-w-6xl mx-auto px-4 -mt-8 pb-14">
+  <section class="max-w-6xl mx-auto px-4 -mt-8 pb-16">
     <div class="grid md:grid-cols-3 gap-4">
       {categories.map(cat => (
         <CategoryCard name={cat.name} slug={cat.slug} description={cat.description} />
@@ -39,15 +39,19 @@ const categories = [
     </div>
   </section>
 
-  <section class="max-w-6xl mx-auto px-4 pb-16">
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="text-2xl font-bold text-dark">Latest Finds</h2>
-      <a href="/categories/" class="text-sm font-medium text-brand-500 hover:text-brand-600 transition-colors">
+  <section class="max-w-6xl mx-auto px-4 pb-20">
+    <div class="flex items-center justify-between mb-10">
+      <h2 class="text-2xl md:text-3xl font-display font-semibold text-dark">Latest Finds</h2>
+      <a href="/categories/" class="text-sm font-medium text-accent-500 hover:text-accent-600 transition-colors">
         View All Categories &rarr;
       </a>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {posts.map(post => <ProductCard post={post} />)}
-    </div>
+    {posts.length > 0 ? (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {posts.map(post => <ProductCard post={post} />)}
+      </div>
+    ) : (
+      <p class="text-center text-dark/30 py-16 font-sans">No products yet. Check back soon!</p>
+    )}
   </section>
 </BaseLayout>

@@ -7,17 +7,17 @@ const links = [
 ];
 ---
 
-<header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md border-b border-gray-100">
+<header class="sticky top-0 z-50 bg-cream/85 backdrop-blur-lg border-b border-brand-100/50">
   <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="/" class="text-xl font-bold text-dark tracking-tight">
-      Home <span class="text-brand-500">Finds</span>
+    <a href="/" class="font-display text-xl font-semibold text-dark tracking-tight">
+      Home <span class="text-brand-400">Finds</span>
     </a>
 
     <div class="hidden md:flex items-center gap-8">
       {links.map(link => (
         <a
           href={link.href}
-          class="text-sm font-medium text-gray-600 hover:text-brand-500 transition-colors"
+          class="text-sm font-medium text-dark/60 hover:text-brand-500 transition-colors"
         >
           {link.label}
         </a>
@@ -25,7 +25,7 @@ const links = [
     </div>
 
     <button id="menu-toggle" class="md:hidden p-2 text-dark" aria-label="Toggle menu">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <line x1="3" y1="6" x2="21" y2="6"/>
         <line x1="3" y1="12" x2="21" y2="12"/>
         <line x1="3" y1="18" x2="21" y2="18"/>
@@ -33,12 +33,12 @@ const links = [
     </button>
   </nav>
 
-  <div id="mobile-menu" class="hidden md:hidden bg-cream border-t border-gray-100">
+  <div id="mobile-menu" class="hidden md:hidden bg-cream border-t border-brand-100/50">
     <div class="px-4 py-4 space-y-3">
       {links.map(link => (
         <a
           href={link.href}
-          class="block text-base font-medium text-gray-600 hover:text-brand-500 transition-colors"
+          class="block text-base font-medium text-dark/60 hover:text-brand-500 transition-colors"
         >
           {link.label}
         </a>

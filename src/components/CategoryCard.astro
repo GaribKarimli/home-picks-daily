@@ -10,15 +10,15 @@ const { name, slug, description } = Astro.props;
 
 <a
   href={`/categories/${slug}/`}
-  class="block bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all group border border-gray-100"
+  class="block bg-white rounded-2xl p-6 shadow-soft hover:shadow-soft-lg transition-all duration-300 group border border-brand-100/30"
 >
-  <h3 class="text-lg font-semibold text-dark group-hover:text-brand-500 transition-colors">
+  <h3 class="text-lg font-display font-semibold text-dark group-hover:text-accent-500 transition-colors">
     {name}
   </h3>
-  <p class="text-sm text-gray-500 mt-1 leading-relaxed">
+  <p class="text-sm text-dark/50 mt-1.5 leading-relaxed">
     {description}
   </p>
-  <span class="text-sm font-medium text-brand-500 mt-3 inline-block group-hover:translate-x-1 transition-transform">
+  <span class="text-sm font-medium text-accent-500 mt-4 inline-block group-hover:translate-x-1 transition-transform">
     Browse &rarr;
   </span>
 </a>

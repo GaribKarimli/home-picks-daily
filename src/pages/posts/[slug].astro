@@ -18,44 +18,44 @@ const categorySlug = data.category.toLowerCase().replace(/\s+/g, '-');
 ---
 
 <BaseLayout title={data.title} description={data.description} image={data.image}>
-  <article class="max-w-4xl mx-auto px-4 py-8">
-    <nav class="text-sm text-gray-400 mb-6">
+  <article class="max-w-4xl mx-auto px-4 py-10">
+    <nav class="text-sm text-dark/40 mb-8 font-sans">
       <a href="/" class="hover:text-brand-500 transition-colors">Home</a>
       <span class="mx-2">/</span>
       <a href={`/categories/${categorySlug}/`} class="hover:text-brand-500 transition-colors">{data.category}</a>
       <span class="mx-2">/</span>
-      <span class="text-dark font-medium">{data.title}</span>
+      <span class="text-dark/70 font-medium">{data.title}</span>
     </nav>
 
-    <div class="grid md:grid-cols-2 gap-8 md:gap-12">
-      <div class="rounded-2xl overflow-hidden bg-brand-50">
+    <div class="grid md:grid-cols-2 gap-10 md:gap-14">
+      <div class="rounded-3xl overflow-hidden bg-sage shadow-soft">
         <img src={data.image} alt={data.title} class="w-full h-auto object-cover" />
       </div>
 
       <div class="flex flex-col">
-        <span class="inline-block text-xs font-medium text-brand-600 bg-brand-50 px-3 py-1.5 rounded-full w-fit">
+        <span class="inline-block text-xs font-medium text-brand-600 bg-sage px-3 py-1.5 rounded-full w-fit">
           {data.category}
         </span>
 
-        <h1 class="text-3xl md:text-4xl font-bold text-dark mt-3 leading-tight">
+        <h1 class="text-3xl md:text-4xl font-display font-bold text-dark mt-4 leading-tight">
           {data.title}
         </h1>
 
         <div class="flex items-center gap-2 mt-3">
-          <div class="flex text-amber-400 text-lg">
+          <div class="flex text-amber-400/80 text-lg">
             {Array.from({ length: 5 }, (_, i) => (
               <span>{i < stars ? '★' : '☆'}</span>
             ))}
           </div>
-          <span class="text-sm text-gray-400">{data.rating} / 5</span>
+          <span class="text-sm text-dark/40">{data.rating} / 5</span>
         </div>
 
-        <p class="text-3xl font-bold text-brand-600 mt-4">{data.price}</p>
+        <p class="text-3xl md:text-4xl font-display font-bold text-brand-500 mt-5">{data.price}</p>
 
         <ul class="mt-6 space-y-3">
           {data.features.map((feature, i) => (
-            <li class="flex items-start gap-3 text-gray-600">
-              <svg class="w-5 h-5 text-brand-500 mt-0.5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <li class="flex items-start gap-3 text-dark/60">
+              <svg class="w-5 h-5 text-brand-400 mt-0.5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
               {feature}
@@ -68,19 +68,24 @@ const categorySlug = data.category.toLowerCase().replace(/\s+/g, '-');
             href={data.amazonLink}
             target="_blank"
             rel="noopener sponsored"
-            class="block w-full text-center bg-brand-500 hover:bg-brand-600 text-white font-semibold py-4 px-6 rounded-xl text-lg transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.98]"
+            class="block w-full text-center bg-accent-500 hover:bg-accent-600 text-white font-medium py-4 px-6 rounded-xl text-lg transition-all duration-300 shadow-soft hover:shadow-soft-lg active:scale-[0.98]"
           >
             Check Price on Amazon &rarr;
           </a>
-          <p class="mt-2 text-xs text-gray-400 text-center">
+          <p class="mt-2 text-xs text-dark/30 text-center">
             As an Amazon Associate we earn from qualifying purchases.
           </p>
         </div>
       </div>
     </div>
 
-    <div class="mt-12 md:mt-16 max-w-3xl">
-      <div class="prose prose-gray prose-lg">
+    <div class="mt-14 md:mt-20 max-w-3xl">
+      <div class="prose prose-gray prose-lg max-w-none
+        prose-headings:font-display prose-headings:text-dark
+        prose-p:text-dark/60 prose-p:leading-relaxed
+        prose-a:text-accent-500 prose-a:no-underline hover:prose-a:underline
+        prose-strong:text-dark
+        prose-li:text-dark/60">
         <Content />
       </div>
     </div>
