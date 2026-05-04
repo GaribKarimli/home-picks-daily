@@ -1,13 +1,14 @@
 {
-  "_note": "Replace placeholder ASINs (B0EXAMPLE*) with real Amazon ASINs.",
-  "_howto": "Open any Amazon product page, the ASIN is in the URL: amazon.com/dp/B0XXXXXXXXX",
+  "_note": "Replace placeholder ASINs and images with real ones.",
+  "_howto_asin": "Find ASIN in Amazon URL: amazon.com/dp/B0XXXXXXXXX",
+  "_howto_image": "Right-click product image on Amazon -> Copy image address -> paste below",
   "products": [
     {
       "title": "Smart Kitchen Scale with Nutritional Database",
       "price": "$29.99",
       "rating": 4.5,
       "reviews": 1250,
-      "image": "https://images.unsplash.com/photo-1584479898061-15742e1c2180?w=800&q=80",
+      "image": "https://picsum.photos/seed/kitchen-scale/800/1000",
       "asin": "B0EXAMPLE1"
     },
     {
@@ -15,7 +16,7 @@
       "price": "$39.99",
       "rating": 4.7,
       "reviews": 3200,
-      "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbea78?w=800&q=80",
+      "image": "https://picsum.photos/seed/bamboo-clock/800/1000",
       "asin": "B0EXAMPLE2"
     },
     {
@@ -23,7 +24,7 @@
       "price": "$59.99",
       "rating": 4.6,
       "reviews": 8500,
-      "image": "https://images.unsplash.com/photo-1590658268037-6bf12f032f55?w=800&q=80",
+      "image": "https://picsum.photos/seed/wireless-earbuds/800/1000",
       "asin": "B0EXAMPLE3"
     },
     {
@@ -31,7 +32,7 @@
       "price": "$49.99",
       "rating": 4.4,
       "reviews": 15000,
-      "image": "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w=800&q=80",
+      "image": "https://picsum.photos/seed/fitness-tracker/800/1000",
       "asin": "B0EXAMPLE4"
     },
     {
@@ -39,7 +40,7 @@
       "price": "$34.99",
       "rating": 4.5,
       "reviews": 28000,
-      "image": "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=800&q=80",
+      "image": "https://picsum.photos/seed/yoga-mat/800/1000",
       "asin": "B0EXAMPLE5"
     }
   ]
