@@ -7,6 +7,54 @@ from bs4 import BeautifulSoup
 
 from scripts.config import Config, NICHES, SMART_FILTERS
 
+DEMO_PRODUCTS = [
+    {
+        "title": "Smart Kitchen Scale with Nutritional Database",
+        "price": "$29.99",
+        "rating": 4.5,
+        "reviews": 1250,
+        "image": "https://images.unsplash.com/photo-1584479898061-15742e1c2180?w=800&q=80",
+        "url": "https://www.amazon.com/dp/B0EXAMPLE1",
+        "asin": "B0EXAMPLE1",
+    },
+    {
+        "title": "Minimalist Bamboo Wall Clock Silent Movement",
+        "price": "$39.99",
+        "rating": 4.7,
+        "reviews": 3200,
+        "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbea78?w=800&q=80",
+        "url": "https://www.amazon.com/dp/B0EXAMPLE2",
+        "asin": "B0EXAMPLE2",
+    },
+    {
+        "title": "Wireless Noise-Cancelling Earbuds Bluetooth 5.3",
+        "price": "$59.99",
+        "rating": 4.6,
+        "reviews": 8500,
+        "image": "https://images.unsplash.com/photo-1590658268037-6bf12f032f55?w=800&q=80",
+        "url": "https://www.amazon.com/dp/B0EXAMPLE3",
+        "asin": "B0EXAMPLE3",
+    },
+    {
+        "title": "Smart Fitness Tracker with Heart Rate Monitor",
+        "price": "$49.99",
+        "rating": 4.4,
+        "reviews": 15000,
+        "image": "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w=800&q=80",
+        "url": "https://www.amazon.com/dp/B0EXAMPLE4",
+        "asin": "B0EXAMPLE4",
+    },
+    {
+        "title": "Premium Yoga Mat Extra Thick Non-Slip",
+        "price": "$34.99",
+        "rating": 4.5,
+        "reviews": 28000,
+        "image": "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=800&q=80",
+        "url": "https://www.amazon.com/dp/B0EXAMPLE5",
+        "asin": "B0EXAMPLE5",
+    },
+]
+
 
 def _headers() -> dict:
     user_agents = [
@@ -160,8 +208,9 @@ def get_products(
             break
 
     if not all_products:
-        print("  [X] Amazon scraping returned no results. No products to add.")
-        return []
+        print("  [X] Amazon scraping returned no results. Falling back to demo data.")
+        indices = niche_config["demo_products_idx"]
+        return [DEMO_PRODUCTS[i] for i in indices[:count]]
 
     all_products.sort(key=lambda p: (1 if p["image"] else 0, p["rating"]), reverse=True)
     return all_products[:count]
