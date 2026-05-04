@@ -36,6 +36,7 @@ NICHES = {
 
 SMART_FILTERS = {
     "min_rating": 4.0,
+    "min_reviews": 500,
     "min_price": 30,
     "max_price": 500,
 }

@@ -48,7 +48,7 @@ const isTopRated = data.rating >= 4.5;
         <div class="flex items-center gap-2 mt-3">
           <div class="flex text-amber-400/80 text-lg">
             {Array.from({ length: 5 }, (_, i) => (
-              <span>{i < stars ? '★' : '☆'}</span>
+              <span>{i < stars ? '\u2605' : '\u2606'}</span>
             ))}
           </div>
           <span class="text-sm text-dark/40">{data.rating} / 5</span>

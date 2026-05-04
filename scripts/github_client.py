@@ -35,7 +35,7 @@ def push_product(md_content: str, filename: str) -> str:
 
     shutil.rmtree(repo_dir)
 
-    raw_name = filename.replace(".md", "")
+    raw_name = filename.replace(".md", "").replace("\\", "/")
     url = f"{Config.SITE_URL}/posts/{raw_name}/"
     print(f"  [git] Pushed & deployed: {url}")
     return url

@@ -87,8 +87,10 @@ def _parse_review_count(text: str) -> int:
     return 0
 
 
-def _passes_smart_filter(rating: float, price_num: Optional[float]) -> bool:
+def _passes_smart_filter(rating: float, reviews: int, price_num: Optional[float]) -> bool:
     if rating < SMART_FILTERS["min_rating"]:
+        return False
+    if reviews < SMART_FILTERS["min_reviews"]:
         return False
     if price_num is not None:
         if price_num < SMART_FILTERS["min_price"] or price_num > SMART_FILTERS["max_price"]:
@@ -138,7 +140,7 @@ def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
         review_el = card.select_one("a.a-link-normal.s-underline-text > span")
         reviews = _parse_review_count(review_el.get_text(strip=True)) if review_el else 0
 
-        if not _passes_smart_filter(rating, price_num):
+        if not _passes_smart_filter(rating, reviews, price_num):
             continue
 
         products.append({

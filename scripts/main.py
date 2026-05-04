@@ -79,9 +79,7 @@ def run_niche(
         post = generate_post(product, niche)
 
         md = build_markdown(post)
-        niche_dir = niche.replace("-", "-")
-        filename = f"{post['slug']}.md"
-
+        filename = f"{niche}--{post['slug']}.md"
         local_path = Path("src/content/posts") / filename
         local_path.parent.mkdir(parents=True, exist_ok=True)
         local_path.write_text(md, encoding="utf-8")
