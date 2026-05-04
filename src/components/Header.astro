@@ -5,6 +5,13 @@ const links = [
   { href: '/categories/', label: 'Categories' },
   { href: '/about/', label: 'About' },
 ];
+
+const nicheLinks = [
+  { href: '/?niche=home-decor', label: 'Home Decor' },
+  { href: '/?niche=tech-gadgets', label: 'Tech' },
+  { href: '/?niche=fitness-equipment', label: 'Fitness' },
+  { href: '/?niche=kitchen-essentials', label: 'Kitchen' },
+];
 ---
 
 <header class="sticky top-0 z-50 bg-cream/85 backdrop-blur-lg border-b border-brand-100/50">
@@ -13,11 +20,20 @@ const links = [
       Home <span class="text-brand-400">Finds</span>
     </a>
 
-    <div class="hidden md:flex items-center gap-8">
+    <div class="hidden md:flex items-center gap-6">
       {links.map(link => (
         <a
           href={link.href}
           class="text-sm font-medium text-dark/60 hover:text-brand-500 transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+      <div class="h-4 w-px bg-brand-200 mx-1"></div>
+      {nicheLinks.map(link => (
+        <a
+          href={link.href}
+          class="text-xs font-medium text-dark/40 hover:text-accent-500 transition-colors"
         >
           {link.label}
         </a>
@@ -39,6 +55,16 @@ const links = [
         <a
           href={link.href}
           class="block text-base font-medium text-dark/60 hover:text-brand-500 transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+      <hr class="border-brand-100/50 my-2" />
+      <p class="text-xs text-dark/30 uppercase tracking-widest font-semibold px-1">Niches</p>
+      {nicheLinks.map(link => (
+        <a
+          href={link.href}
+          class="block text-sm font-medium text-dark/40 hover:text-accent-500 transition-colors px-1"
         >
           {link.label}
         </a>

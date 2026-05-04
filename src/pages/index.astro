@@ -3,36 +3,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import ProductCard from '../components/ProductCard.astro';
 import CategoryCard from '../components/CategoryCard.astro';
+import CategoryTabs from '../components/CategoryTabs.astro';
 
-const posts = await getCollection('posts');
-posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const activeNiche = Astro.url.searchParams.get('niche');
+
+const allPosts = await getCollection('posts');
+allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const posts = activeNiche
+  ? allPosts.filter(p => p.data.niche === activeNiche)
+  : allPosts;
 
 const categories = [
-  { name: 'Kitchen Gadgets', slug: 'kitchen-gadgets', description: 'Smart tools and appliances for your kitchen' },
-  { name: 'Living Room Decor', slug: 'living-room-decor', description: 'Cozy accents to elevate your space' },
-  { name: 'Organization Hacks', slug: 'organization-hacks', description: 'Clever solutions for a clutter-free home' },
+  { name: 'Home Decor', slug: 'home-decor', description: 'Beautiful accents to elevate your living space' },
+  { name: 'Tech Gadgets', slug: 'tech-gadgets', description: 'Smart devices for the modern lifestyle' },
+  { name: 'Fitness Equipment', slug: 'fitness-equipment', description: 'Gear that keeps you moving' },
+  { name: 'Kitchen Essentials', slug: 'kitchen-essentials', description: 'Tools every home cook needs' },
 ];
 ---
 
 <BaseLayout
-  title="Home Finds — Curated Home &amp; Kitchen Products"
-  description="Discover the best home and kitchen products. Curated kitchen gadgets, living room decor, and organization hacks — all in one place."
+  title="Home Finds — Curated Home, Tech, Fitness &amp; Kitchen Products"
+  description="Discover trending products across home decor, tech gadgets, fitness equipment, and kitchen essentials."
 >
-  <section class="bg-gradient-to-b from-blush via-cream to-cream py-20 md:py-28">
+  <section class="bg-gradient-to-b from-blush via-cream to-cream py-16 md:py-24">
     <div class="max-w-6xl mx-auto px-4 text-center">
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-dark tracking-tight leading-tight">
-        Home Finds You'll
-        <span class="text-accent-500 italic">Love</span>
+        Discover Your Next
+        <span class="text-accent-500 italic">Find</span>
       </h1>
       <p class="mt-4 text-base md:text-lg text-dark/50 max-w-2xl mx-auto leading-relaxed font-sans">
-        Curated kitchen gadgets, living room decor, and organization hacks — all in one place.
-        Every product, handpicked for your home.
+        Trending products across home decor, tech, fitness &amp; kitchen — curated daily.
       </p>
     </div>
   </section>
 
   <section class="max-w-6xl mx-auto px-4 -mt-8 pb-16">
-    <div class="grid md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
       {categories.map(cat => (
         <CategoryCard name={cat.name} slug={cat.slug} description={cat.description} />
       ))}
@@ -40,18 +47,31 @@ const categories = [
   </section>
 
   <section class="max-w-6xl mx-auto px-4 pb-20">
-    <div class="flex items-center justify-between mb-10">
-      <h2 class="text-2xl md:text-3xl font-display font-semibold text-dark">Latest Finds</h2>
-      <a href="/categories/" class="text-sm font-medium text-accent-500 hover:text-accent-600 transition-colors">
-        View All Categories &rarr;
-      </a>
-    </div>
+    <CategoryTabs active={activeNiche || 'all'} />
+
     {posts.length > 0 ? (
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div class="pinterest-grid">
         {posts.map(post => <ProductCard post={post} />)}
       </div>
     ) : (
-      <p class="text-center text-dark/30 py-16 font-sans">No products yet. Check back soon!</p>
+      <p class="text-center text-dark/30 py-16 font-sans">No products in this category yet. Check back soon!</p>
     )}
   </section>
 </BaseLayout>
+
+<style>
+  .pinterest-grid {
+    columns: 1;
+    column-gap: 1.5rem;
+  }
+  .pinterest-grid > * {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .pinterest-grid { columns: 2; }
+  }
+  @media (min-width: 1024px) {
+    .pinterest-grid { columns: 3; }
+  }
+</style>

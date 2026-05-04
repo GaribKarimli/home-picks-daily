@@ -1,19 +1,19 @@
 import re
 import random
-import time
+import json
 from typing import Optional
 
 import requests
 from bs4 import BeautifulSoup
 
-from scripts.config import Config
-
+from scripts.config import Config, NICHES, SMART_FILTERS
 
 DEMO_PRODUCTS = [
     {
         "title": "Smart Kitchen Scale with Nutritional Database",
         "price": "$29.99",
         "rating": 4.5,
+        "reviews": 1250,
         "image": "https://images.unsplash.com/photo-1584479898061-15742e1c2180?w=800&q=80",
         "url": "https://www.amazon.com/dp/B0EXAMPLE1",
         "asin": "B0EXAMPLE1",
@@ -22,55 +22,78 @@ DEMO_PRODUCTS = [
         "title": "Minimalist Bamboo Wall Clock Silent Movement",
         "price": "$39.99",
         "rating": 4.7,
+        "reviews": 3200,
         "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbea78?w=800&q=80",
         "url": "https://www.amazon.com/dp/B0EXAMPLE2",
         "asin": "B0EXAMPLE2",
     },
     {
-        "title": "Modular Bamboo Drawer Organizer Set of 8",
-        "price": "$24.99",
-        "rating": 4.3,
-        "image": "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=800&q=80",
+        "title": "Wireless Noise-Cancelling Earbuds Bluetooth 5.3",
+        "price": "$59.99",
+        "rating": 4.6,
+        "reviews": 8500,
+        "image": "https://images.unsplash.com/photo-1590658268037-6bf12f032f55?w=800&q=80",
         "url": "https://www.amazon.com/dp/B0EXAMPLE3",
         "asin": "B0EXAMPLE3",
     },
     {
-        "title": "French Press Coffee Maker Borosilicate Glass",
-        "price": "$34.95",
-        "rating": 4.6,
-        "image": "https://images.unsplash.com/photo-1564758562183-1c1e2e1b3843?w=800&q=80",
+        "title": "Smart Fitness Tracker with Heart Rate Monitor",
+        "price": "$49.99",
+        "rating": 4.4,
+        "reviews": 15000,
+        "image": "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w=800&q=80",
         "url": "https://www.amazon.com/dp/B0EXAMPLE4",
         "asin": "B0EXAMPLE4",
     },
     {
-        "title": "Scented Soy Candle Set Lavender & Vanilla",
-        "price": "$19.99",
-        "rating": 4.4,
-        "image": "https://images.unsplash.com/photo-1602874801007-bd36c3e2a2ad?w=800&q=80",
+        "title": "Premium Yoga Mat Extra Thick Non-Slip",
+        "price": "$34.99",
+        "rating": 4.5,
+        "reviews": 28000,
+        "image": "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=800&q=80",
         "url": "https://www.amazon.com/dp/B0EXAMPLE5",
         "asin": "B0EXAMPLE5",
     },
 ]
 
-CATEGORY_KEYWORDS = {
-    "kitchen-gadgets": "kitchen+gadgets+home",
-    "living-room-decor": "living+room+decor+home",
-    "organization-hacks": "home+organization+storage",
-}
-
 
 def _headers() -> dict:
-    mobile_agents = [
+    user_agents = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/605.1.15 Safari/605.1.15",
         "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 Chrome/120.0.6099.43 Mobile Safari/537.36",
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) AppleWebKit/605.1.15 Mobile/15E148",
-        "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/121.0.6167.101 Mobile Safari/537.36",
     ]
     return {
-        "User-Agent": random.choice(mobile_agents),
+        "User-Agent": random.choice(user_agents),
         "Accept-Language": "en-US,en;q=0.9",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Encoding": "gzip, deflate, br",
     }
+
+
+def _parse_price(price_str: str) -> Optional[float]:
+    if not price_str:
+        return None
+    match = re.search(r"[\d,]+\.?\d*", price_str.replace(",", ""))
+    if match:
+        return float(match.group())
+    return None
+
+
+def _parse_review_count(text: str) -> int:
+    match = re.search(r"([\d,]+)", text.replace(",", ""))
+    if match:
+        return int(match.group(1))
+    return 0
+
+
+def _passes_smart_filter(rating: float, price_num: Optional[float]) -> bool:
+    if rating < SMART_FILTERS["min_rating"]:
+        return False
+    if price_num is not None:
+        if price_num < SMART_FILTERS["min_price"] or price_num > SMART_FILTERS["max_price"]:
+            return False
+    return True
 
 
 def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
@@ -93,12 +116,9 @@ def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
         if not asin or len(asin) < 10:
             continue
 
-        title_el = card.select_one("h2 a.a-link-normal span.a-text-normal")
-        if not title_el:
-            title_el = card.select_one("h2 a span")
+        title_el = card.select_one("h2 a.a-link-normal span.a-text-normal") or card.select_one("h2 a span")
         if not title_el:
             continue
-
         title = title_el.get_text(strip=True)
 
         img_el = card.select_one("img.s-image")
@@ -106,6 +126,7 @@ def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
 
         price_el = card.select_one("span.a-price span.a-offscreen")
         price = price_el.get_text(strip=True) if price_el else ""
+        price_num = _parse_price(price)
 
         rating_el = card.select_one("i.a-icon-star span.a-icon-alt")
         rating = 0.0
@@ -114,14 +135,19 @@ def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
             if match:
                 rating = float(match.group(1))
 
-        url = f"https://www.amazon.com/dp/{asin}"
+        review_el = card.select_one("a.a-link-normal.s-underline-text > span")
+        reviews = _parse_review_count(review_el.get_text(strip=True)) if review_el else 0
+
+        if not _passes_smart_filter(rating, price_num):
+            continue
 
         products.append({
             "title": title,
-            "price": price,
+            "price": price or f"${price_num:.2f}" if price_num else "",
             "rating": rating,
+            "reviews": reviews,
             "image": image,
-            "url": url,
+            "url": f"https://www.amazon.com/dp/{asin}",
             "asin": asin,
         })
 
@@ -129,18 +155,30 @@ def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
 
 
 def get_products(
-    category: str = "kitchen-gadgets",
+    niche: str = "home-decor",
     count: int = 3,
     demo: bool = False,
+    search_terms: list[str] | None = None,
 ) -> list[dict]:
+    niche_config = NICHES.get(niche, NICHES["home-decor"])
+
     if demo:
-        return DEMO_PRODUCTS[:count]
+        indices = niche_config["demo_products_idx"]
+        return [DEMO_PRODUCTS[i] for i in indices[:count]]
 
-    keyword = CATEGORY_KEYWORDS.get(category, category.replace("-", "+"))
-    products = search_amazon(keyword, max_results=count)
+    terms = search_terms if search_terms else niche_config["search_terms"]
+    all_products = []
 
-    if not products:
+    for term in terms:
+        products = search_amazon(term, max_results=count)
+        all_products.extend(products)
+        if len(all_products) >= count:
+            break
+
+    if not all_products:
         print("  [X] Amazon scraping returned no results. Falling back to demo data.")
-        return DEMO_PRODUCTS[:count]
+        indices = niche_config["demo_products_idx"]
+        return [DEMO_PRODUCTS[i] for i in indices[:count]]
 
-    return products
+    all_products.sort(key=lambda p: p["rating"], reverse=True)
+    return all_products[:count]

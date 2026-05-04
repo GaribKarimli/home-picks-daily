@@ -1,0 +1,36 @@
+---
+interface Props {
+  active?: string;
+}
+
+const { active } = Astro.props;
+
+const tabs = [
+  { id: 'all', label: 'All' },
+  { id: 'home-decor', label: 'Home Decor' },
+  { id: 'tech-gadgets', label: 'Tech' },
+  { id: 'fitness-equipment', label: 'Fitness' },
+  { id: 'kitchen-essentials', label: 'Kitchen' },
+];
+---
+
+<nav class="flex flex-wrap gap-2 mb-10">
+  {tabs.map(tab => {
+    const href = tab.id === 'all' ? '/' : `/?niche=${tab.id}`;
+    const isActive = active === tab.id || (!active && tab.id === 'all');
+    return (
+      <a
+        href={href}
+        class={`
+          px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
+          ${isActive
+            ? 'bg-accent-500 text-white shadow-soft'
+            : 'bg-white text-dark/50 hover:text-accent-500 hover:bg-accent-50 border border-brand-100/30'
+          }
+        `}
+      >
+        {tab.label}
+      </a>
+    );
+  })}
+</nav>

@@ -3,18 +3,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CategoryCard from '../../components/CategoryCard.astro';
 
 const categories = [
-  { name: 'Kitchen Gadgets', slug: 'kitchen-gadgets', description: 'Smart tools and appliances that make cooking easier, faster, and more enjoyable.' },
-  { name: 'Living Room Decor', slug: 'living-room-decor', description: 'Stylish accents, furniture, and decor to create a warm and inviting living space.' },
-  { name: 'Organization Hacks', slug: 'organization-hacks', description: 'Clever storage solutions and organization products for every room in your home.' },
+  { name: 'Home Decor', slug: 'home-decor', description: 'Beautiful accents to elevate your living space.' },
+  { name: 'Tech Gadgets', slug: 'tech-gadgets', description: 'Smart devices for the modern lifestyle.' },
+  { name: 'Fitness Equipment', slug: 'fitness-equipment', description: 'Gear that keeps you moving.' },
+  { name: 'Kitchen Essentials', slug: 'kitchen-essentials', description: 'Tools every home cook needs.' },
 ];
 ---
 
-<BaseLayout title="Categories" description="Browse our curated categories of home and kitchen products.">
+<BaseLayout title="Categories" description="Browse our curated niches of trending products.">
   <div class="max-w-6xl mx-auto px-4 py-16">
-    <h1 class="text-3xl md:text-4xl font-display font-bold text-dark mb-2">Shop by Category</h1>
-    <p class="text-dark/50 mb-12">Find exactly what you're looking for.</p>
+    <h1 class="text-3xl md:text-4xl font-display font-bold text-dark mb-2">Shop by Niche</h1>
+    <p class="text-dark/50 mb-12">Find what you love across our curated categories.</p>
 
-    <div class="grid md:grid-cols-3 gap-6">
+    <div class="grid md:grid-cols-4 gap-6">
       {categories.map(cat => (
         <CategoryCard name={cat.name} slug={cat.slug} description={cat.description} />
       ))}

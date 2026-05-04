@@ -14,26 +14,30 @@ const { post } = Astro.props;
 const { data } = post;
 const { Content } = await post.render();
 const stars = Math.round(data.rating);
-const categorySlug = data.category.toLowerCase().replace(/\s+/g, '-');
+const isTopRated = data.rating >= 4.5;
 ---
 
 <BaseLayout title={data.title} description={data.description} image={data.image}>
   <article class="max-w-4xl mx-auto px-4 py-10">
-    <nav class="text-sm text-dark/40 mb-8 font-sans">
+    <nav class="text-sm text-dark/40 mb-8 font-sans flex flex-wrap items-center gap-x-2 gap-y-1">
       <a href="/" class="hover:text-brand-500 transition-colors">Home</a>
-      <span class="mx-2">/</span>
-      <a href={`/categories/${categorySlug}/`} class="hover:text-brand-500 transition-colors">{data.category}</a>
-      <span class="mx-2">/</span>
+      <span>/</span>
       <span class="text-dark/70 font-medium">{data.title}</span>
     </nav>
 
     <div class="grid md:grid-cols-2 gap-10 md:gap-14">
-      <div class="rounded-3xl overflow-hidden bg-sage shadow-soft">
+      <div class="relative rounded-3xl overflow-hidden bg-sage shadow-soft">
         <img src={data.image} alt={data.title} class="w-full h-auto object-cover" />
+        {data.trending &&
+          <span class="absolute top-4 right-4 bg-accent-500 text-white text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">Trending Now</span>
+        }
+        {!data.trending && isTopRated &&
+          <span class="absolute top-4 right-4 bg-amber-400 text-white text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">Top Rated</span>
+        }
       </div>
 
       <div class="flex flex-col">
-        <span class="inline-block text-xs font-medium text-brand-600 bg-sage px-3 py-1.5 rounded-full w-fit">
+        <span class="inline-block text-xs font-medium text-brand-600 bg-sage px-3 py-1.5 rounded-full w-fit uppercase tracking-wider">
           {data.category}
         </span>
 
@@ -48,12 +52,13 @@ const categorySlug = data.category.toLowerCase().replace(/\s+/g, '-');
             ))}
           </div>
           <span class="text-sm text-dark/40">{data.rating} / 5</span>
+          {data.reviews > 0 && <span class="text-sm text-dark/30">({data.reviews.toLocaleString()} reviews)</span>}
         </div>
 
         <p class="text-3xl md:text-4xl font-display font-bold text-brand-500 mt-5">{data.price}</p>
 
         <ul class="mt-6 space-y-3">
-          {data.features.map((feature, i) => (
+          {data.features.map((feature) => (
             <li class="flex items-start gap-3 text-dark/60">
               <svg class="w-5 h-5 text-brand-400 mt-0.5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />

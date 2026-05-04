@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
 """
-Home Picks Daily - Amazon Affiliate Content Automation
+Home Picks Daily - Multi-Niche Affiliate Content Automation
 
 Usage:
-  python -m scripts.main --category kitchen-gadgets --count 3 --demo
-  python -m scripts.main --category living-room-decor --count 5
-  python -m scripts.main --category organization-hacks --count 2 --no-push
+  python -m scripts.main --niche home-decor --count 3 --demo
+  python -m scripts.main --niche tech-gadgets --count 5
+  python -m scripts.main --niche fitness-equipment --count 2 --trending
+  python -m scripts.main --niche kitchen-essentials --count 4 --no-push
+  python -m scripts.main --all-niches --count 2 --demo --no-push
 """
 
 import argparse
 import sys
 from pathlib import Path
 
-from scripts.config import Config
+from scripts.config import Config, NICHES
 from scripts.scraper import get_products
 from scripts.generator import generate_post
 from scripts.github_client import push_product
+from scripts.trends import get_trending_search_terms
 
 CHECK = "[OK]"
 CROSS = "[X]"
@@ -31,29 +34,52 @@ title: "{post['title']}"
 image: "{post['image']}"
 price: "{post['price']}"
 amazonLink: "{post['amazonLink']}"
+niche: "{post['niche']}"
 category: "{post['category']}"
 features:
 {features_yaml}
 rating: {post['rating']}
+reviews: {post['reviews']}
 date: {post['date']}
 description: "{post['description']}"
+trending: {"true" if post.get("trending") else "false"}
 ---
 
 {post['body']}
 """
 
 
-def run(category: str, count: int, demo: bool, push: bool):
-    print(f"  {STAR} Fetching {count} products from category: {category}")
-    products = get_products(category, count, demo=demo)
+def run_niche(
+    niche: str,
+    count: int,
+    demo: bool,
+    push: bool,
+    use_trends: bool,
+):
+    print(f"  {STAR} Niche: {NICHES[niche]['name']}")
+    print(f"  {STAR} Fetching {count} products...")
+
+    search_terms = None
+    if use_trends:
+        print(f"  {STAR} Checking Google Trends for {niche}...")
+        search_terms = get_trending_search_terms(niche, top_n=3)
+        if search_terms:
+            print(f"  {CHECK} Trending terms: {', '.join(search_terms)}")
+
+    products = get_products(niche, count, demo=demo, search_terms=search_terms)
+    if not products:
+        print(f"  {CROSS} No products found for {niche}.")
+        return
+
     print(f"  {CHECK} Got {len(products)} products\n")
 
     for i, product in enumerate(products, 1):
-        short = product['title'][:50]
+        short = product["title"][:50]
         print(f"  [{i}/{len(products)}] Generating content for: {short}...")
-        post = generate_post(product, category)
+        post = generate_post(product, niche)
 
         md = build_markdown(post)
+        niche_dir = niche.replace("-", "-")
         filename = f"{post['slug']}.md"
 
         local_path = Path("src/content/posts") / filename
@@ -70,29 +96,40 @@ def run(category: str, count: int, demo: bool, push: bool):
         else:
             print(f"  {ARROW} --no-push set. Skipping GitHub.\n")
 
-    print(f"\n  {CHECK} Done! {len(products)} post(s) generated.")
+    print(f"  {CHECK} Done! {len(products)} post(s) for {niche}.\n")
 
 
 def main():
+    niche_choices = list(NICHES.keys())
+
     parser = argparse.ArgumentParser(
-        description="Home Picks Daily - AI-powered Amazon affiliate content generator"
+        description="Home Picks Daily - Multi-Niche Affiliate Content Automation"
     )
     parser.add_argument(
-        "--category",
-        default="kitchen-gadgets",
-        choices=["kitchen-gadgets", "living-room-decor", "organization-hacks"],
-        help="Product category (default: kitchen-gadgets)",
+        "--niche",
+        choices=niche_choices,
+        help=f"Target niche ({', '.join(niche_choices)})",
+    )
+    parser.add_argument(
+        "--all-niches",
+        action="store_true",
+        help="Generate content for ALL niches",
     )
     parser.add_argument(
         "--count",
         type=int,
         default=3,
-        help="Number of products to process (default: 3)",
+        help="Products per niche (default: 3)",
     )
     parser.add_argument(
         "--demo",
         action="store_true",
         help="Use demo products instead of live Amazon scraping",
+    )
+    parser.add_argument(
+        "--trending",
+        action="store_true",
+        help="Use Google Trends data to find trending products",
     )
     parser.add_argument(
         "--no-push",
@@ -101,21 +138,28 @@ def main():
     )
     args = parser.parse_args()
 
+    if not args.niche and not args.all_niches:
+        parser.error("Specify --niche <name> or --all-niches")
+
     try:
         Config.validate()
     except ValueError as e:
         print(f"[ERROR] {e}")
         if args.demo:
-            print(f"[~] Continuing in demo mode with local save only...")
+            print("[~] Continuing in demo mode with local save only...")
         else:
             sys.exit(1)
 
-    run(
-        category=args.category,
-        count=args.count,
-        demo=args.demo,
-        push=not args.no_push,
-    )
+    niches_to_run = list(NICHES.keys()) if args.all_niches else [args.niche]
+
+    for niche in niches_to_run:
+        run_niche(
+            niche=niche,
+            count=args.count,
+            demo=args.demo,
+            push=not args.no_push,
+            use_trends=args.trending,
+        )
 
 
 if __name__ == "__main__":

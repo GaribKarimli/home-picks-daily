@@ -7,11 +7,14 @@ const posts = defineCollection({
     image: z.string(),
     price: z.string(),
     amazonLink: z.string(),
-    category: z.enum(['Kitchen Gadgets', 'Living Room Decor', 'Organization Hacks']),
+    niche: z.enum(['home-decor', 'tech-gadgets', 'fitness-equipment', 'kitchen-essentials']),
+    category: z.string(),
     features: z.array(z.string()),
     rating: z.number().min(0).max(5),
+    reviews: z.number().default(0),
     date: z.date(),
     description: z.string(),
+    trending: z.boolean().default(false),
   }),
 });
 

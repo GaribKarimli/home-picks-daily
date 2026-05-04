@@ -8,41 +8,59 @@ interface Props {
 const { post } = Astro.props;
 const { data } = post;
 const stars = Math.round(data.rating);
+const isTopRated = data.rating >= 4.5;
 ---
 
-<a href={`/posts/${post.slug}/`} class="group block bg-white rounded-3xl overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-500">
-  <div class="aspect-[4/3] overflow-hidden bg-brand-50">
-    <img
-      src={data.image}
-      alt={data.title}
-      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-      loading="lazy"
-    />
+<a href={`/posts/${post.slug}/`} class="group block bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-500">
+  <div class="relative overflow-hidden bg-brand-50">
+    <div class="aspect-[4/5]">
+      <img
+        src={data.image}
+        alt={data.title}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+        loading="lazy"
+      />
+    </div>
+
+    {data.trending && (
+      <span class="absolute top-3 right-3 bg-accent-500 text-white text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md">
+        Trending Now
+      </span>
+    )}
+    {isTopRated && !data.trending && (
+      <span class="absolute top-3 right-3 bg-amber-400 text-white text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md">
+        Top Rated
+      </span>
+    )}
   </div>
 
-  <div class="p-5">
-    <span class="inline-block text-xs font-medium text-brand-600 bg-sage px-3 py-1.5 rounded-full">
+  <div class="p-4">
+    <span class="inline-block text-[10px] font-medium text-brand-600 bg-sage px-2.5 py-1 rounded-full uppercase tracking-wider">
       {data.category}
     </span>
 
-    <h3 class="mt-3 text-lg font-display font-semibold text-dark leading-snug line-clamp-2">
+    <h3 class="mt-2.5 text-sm font-display font-semibold text-dark leading-snug line-clamp-2">
       {data.title}
     </h3>
 
     <div class="mt-2 flex items-center gap-1.5">
-      <div class="flex text-amber-400/80 text-sm">
+      <div class="flex text-amber-400/80 text-xs">
         {Array.from({ length: 5 }, (_, i) => (
           <span>{i < stars ? '★' : '☆'}</span>
         ))}
       </div>
-      <span class="text-xs text-dark/40">({data.rating})</span>
+      <span class="text-[11px] text-dark/40">({data.rating})</span>
     </div>
 
-    <div class="mt-4 flex items-center justify-between">
-      <span class="text-xl font-display font-bold text-brand-500">{data.price}</span>
-      <span class="text-sm font-medium text-dark/40 group-hover:text-brand-500 transition-colors">
-        View Details &rarr;
+    <div class="mt-3 flex items-center justify-between">
+      <span class="text-base font-display font-bold text-brand-500">{data.price}</span>
+      <span class="text-[11px] font-medium text-dark/40 group-hover:text-brand-500 transition-colors">
+        View &rarr;
       </span>
     </div>
+
+    {data.reviews > 0 && (
+      <p class="mt-1.5 text-[10px] text-dark/30">{data.reviews.toLocaleString()} reviews</p>
+    )}
   </div>
 </a>

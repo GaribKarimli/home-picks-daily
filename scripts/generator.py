@@ -6,19 +6,22 @@ from datetime import date
 from google import genai
 from google.genai import errors
 
-from scripts.config import Config
+from scripts.config import Config, NICHES
 
-CATEGORY_MAP = {
-    "kitchen-gadgets": "Kitchen Gadgets",
-    "living-room-decor": "Living Room Decor",
-    "organization-hacks": "Organization Hacks",
+NICHE_DISPLAY = {k: v["name"] for k, v in NICHES.items()}
+
+PROMPT_TEMPLATES = {
+    "home-decor": "Write product content in English about home decor and interior design. Tone: warm, minimalist, premium. Focus on how the product elevates living spaces.",
+    "tech-gadgets": "Write product content in English about tech gadgets. Tone: modern, innovative, premium. Focus on smart features and how the gadget simplifies daily life.",
+    "fitness-equipment": "Write product content in English about fitness equipment. Tone: motivational, energetic, premium. Focus on health benefits and workout results.",
+    "kitchen-essentials": "Write product content in English about kitchen essentials. Tone: warm, practical, premium. Focus on how the tool makes cooking more enjoyable.",
 }
 
-POST_SYSTEM_PROMPT = """You are a professional content writer for a minimalist home & kitchen affiliate website called "Home Picks Daily". Your audience comes from Pinterest — they love aesthetic, warm, minimalist content.
+BASE_PROMPT = """You are a professional content writer for "Home Picks Daily", a multi-niche affiliate product discovery platform. Your audience comes from Pinterest — they love aesthetic, visual, premium content.
 
-Write product content in English with the following rules:
-- Tone: warm, minimalist, premium, aspirational
-- Focus on how the product enhances daily home living
+{niche_instruction}
+
+Rules:
 - Keep sentences short and visual (Pinterest-friendly)
 - Never mention price or discounts in the body
 - Never use emojis
@@ -39,19 +42,21 @@ FEATURES:
 METADESC: <one sentence, max 160 chars>
 
 CONTENT:
-<2-3 short paragraphs describing the product, its aesthetic value, and how it transforms home living.>
+<2-3 short paragraphs describing the product and its value.>
 """
 
 
-def _build_product_prompt(product: dict) -> str:
+def _build_product_prompt(product: dict, niche: str) -> str:
+    niche_instruction = PROMPT_TEMPLATES.get(niche, PROMPT_TEMPLATES["home-decor"])
+    prompt = BASE_PROMPT.replace("{niche_instruction}", niche_instruction)
+
     return f"""Product information:
 
 Title: {product['title']}
 Price: {product['price']}
 Rating: {product['rating']}/5
-Category: Home & Kitchen
 
-{POST_SYSTEM_PROMPT}"""
+{prompt}"""
 
 
 MAX_RETRIES = 3
@@ -69,9 +74,9 @@ def _parse_retry_delay(msg: str) -> float | None:
     return None
 
 
-def generate_post(product: dict, category_slug: str) -> dict:
+def generate_post(product: dict, niche: str) -> dict:
     client = genai.Client(api_key=Config.GEMINI_API_KEY)
-    prompt = _build_product_prompt(product)
+    prompt = _build_product_prompt(product, niche)
 
     last_error = None
     for attempt in range(1, MAX_RETRIES + 1):
@@ -81,7 +86,7 @@ def generate_post(product: dict, category_slug: str) -> dict:
                 contents=prompt,
             )
             text = response.text.strip()
-            return _parse_response(text, product, category_slug)
+            return _parse_response(text, product, niche)
 
         except errors.ClientError as e:
             msg = str(e)
@@ -110,11 +115,11 @@ def generate_post(product: dict, category_slug: str) -> dict:
 
     print(f"  [WARN] Gemini API call failed after {attempt} attempt(s): {last_error}")
     print(f"  [~] Using fallback content for: {product['title']}")
-    return _fallback_post(product, category_slug)
+    return _fallback_post(product, niche)
 
 
-def _fallback_post(product: dict, category_slug: str) -> dict:
-    category_name = CATEGORY_MAP.get(category_slug, "Home & Kitchen")
+def _fallback_post(product: dict, niche: str) -> dict:
+    niche_name = NICHE_DISPLAY.get(niche, "Home & Kitchen")
     slug = _to_slug(product["title"])
     amazon_link = f"https://www.amazon.com/dp/{product['asin']}/?tag={Config.AMAZON_TAG}"
     return {
@@ -123,17 +128,20 @@ def _fallback_post(product: dict, category_slug: str) -> dict:
         "image": product["image"],
         "price": product["price"],
         "amazonLink": amazon_link,
-        "category": category_name,
-        "features": ["Premium quality", "Minimalist design", "Durable materials"],
+        "niche": niche,
+        "category": niche_name,
+        "features": ["Premium quality", "Top-rated design", "Durable materials"],
         "rating": product["rating"],
+        "reviews": product.get("reviews", 0),
         "date": date.today().isoformat(),
-        "description": f"Discover the {product['title']} - the perfect addition to your home.",
+        "description": f"Discover the {product['title']} - the perfect addition to your collection.",
         "body": f"Write your product description here for {product['title']}...",
     }
 
 
-def _parse_response(text: str, product: dict, category_slug: str) -> dict:
-    category_name = CATEGORY_MAP.get(category_slug, "Home & Kitchen")
+def _parse_response(text: str, product: dict, niche: str) -> dict:
+    niche_name = NICHE_DISPLAY.get(niche, "Home & Kitchen")
+    has_trending = niche in ["tech-gadgets", "fitness-equipment"]
 
     title = _extract_field(text, "TITLE", product["title"])
     meta_desc = _extract_field(text, "METADESC", "")
@@ -144,12 +152,11 @@ def _parse_response(text: str, product: dict, category_slug: str) -> dict:
         if f.strip() and f.strip().startswith("-")
     ]
     if not features:
-        features = ["Premium quality", "Minimalist design", "Durable materials"]
+        features = ["Premium quality", "Top-rated design", "Durable materials"]
 
     body = _extract_field(text, "CONTENT", "Write your product description here...")
 
     slug = _to_slug(title)
-
     amazon_link = f"https://www.amazon.com/dp/{product['asin']}/?tag={Config.AMAZON_TAG}"
 
     return {
@@ -158,11 +165,14 @@ def _parse_response(text: str, product: dict, category_slug: str) -> dict:
         "image": product["image"],
         "price": product["price"],
         "amazonLink": amazon_link,
-        "category": category_name,
+        "niche": niche,
+        "category": niche_name,
         "features": features,
         "rating": product["rating"],
+        "reviews": product.get("reviews", 0),
         "date": date.today().isoformat(),
         "description": meta_desc,
+        "trending": has_trending,
         "body": body,
     }
 
