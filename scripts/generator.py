@@ -97,7 +97,7 @@ def _try_groq(prompt: str, product: dict, niche: str) -> Optional[dict]:
         from groq import Groq
         client = Groq(api_key=Config.GROQ_API_KEY)
         response = client.chat.completions.create(
-            model="llama-3.1-70b-versatile",
+            model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=1024,
         )
