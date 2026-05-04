@@ -1,5 +1,7 @@
 import re
 import random
+import json
+from pathlib import Path
 from typing import Optional
 
 import requests
@@ -7,7 +9,26 @@ from bs4 import BeautifulSoup
 
 from scripts.config import Config, NICHES, SMART_FILTERS
 
-DEMO_PRODUCTS = [
+
+def _load_my_products() -> list[dict]:
+    path = Path("scripts/my_products.json")
+    if not path.exists():
+        return []
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        products = data.get("products", [])
+        placeholders = sum(1 for p in products if "EXAMPLE" in p.get("asin", ""))
+        if placeholders == len(products):
+            print("  [!] my_products.json has only placeholder ASINs (B0EXAMPLE*). Links won't work on Amazon.")
+            print("  [!] Edit scripts/my_products.json and replace ASINs with real ones.")
+        return products
+    except Exception:
+        return []
+
+
+MY_PRODUCTS = _load_my_products()
+
+DEMO_PRODUCTS = MY_PRODUCTS or [
     {
         "title": "Smart Kitchen Scale with Nutritional Database",
         "price": "$29.99",
