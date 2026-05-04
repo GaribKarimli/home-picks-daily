@@ -1,0 +1,43 @@
+name: Daily Content Update
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      AMAZON_TAG: ${{ secrets.AMAZON_TAG }}
+      REPO_PATH: GaribKarimli/home-picks-daily
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Generate content with trending
+        run: python -m scripts.main --trending --all-niches --no-push
+
+      - name: Commit and push new content
+        run: |
+          git config user.name "home-picks-bot"
+          git config user.email "bot@homepicksdaily.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "Daily content update $(date +'%Y-%m-%d')"
+          git push

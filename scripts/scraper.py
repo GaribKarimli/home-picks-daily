@@ -1,60 +1,11 @@
 import re
 import random
-import json
 from typing import Optional
 
 import requests
 from bs4 import BeautifulSoup
 
 from scripts.config import Config, NICHES, SMART_FILTERS
-
-DEMO_PRODUCTS = [
-    {
-        "title": "Smart Kitchen Scale with Nutritional Database",
-        "price": "$29.99",
-        "rating": 4.5,
-        "reviews": 1250,
-        "image": "https://images.unsplash.com/photo-1584479898061-15742e1c2180?w=800&q=80",
-        "url": "https://www.amazon.com/dp/B0EXAMPLE1",
-        "asin": "B0EXAMPLE1",
-    },
-    {
-        "title": "Minimalist Bamboo Wall Clock Silent Movement",
-        "price": "$39.99",
-        "rating": 4.7,
-        "reviews": 3200,
-        "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbea78?w=800&q=80",
-        "url": "https://www.amazon.com/dp/B0EXAMPLE2",
-        "asin": "B0EXAMPLE2",
-    },
-    {
-        "title": "Wireless Noise-Cancelling Earbuds Bluetooth 5.3",
-        "price": "$59.99",
-        "rating": 4.6,
-        "reviews": 8500,
-        "image": "https://images.unsplash.com/photo-1590658268037-6bf12f032f55?w=800&q=80",
-        "url": "https://www.amazon.com/dp/B0EXAMPLE3",
-        "asin": "B0EXAMPLE3",
-    },
-    {
-        "title": "Smart Fitness Tracker with Heart Rate Monitor",
-        "price": "$49.99",
-        "rating": 4.4,
-        "reviews": 15000,
-        "image": "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w=800&q=80",
-        "url": "https://www.amazon.com/dp/B0EXAMPLE4",
-        "asin": "B0EXAMPLE4",
-    },
-    {
-        "title": "Premium Yoga Mat Extra Thick Non-Slip",
-        "price": "$34.99",
-        "rating": 4.5,
-        "reviews": 28000,
-        "image": "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=800&q=80",
-        "url": "https://www.amazon.com/dp/B0EXAMPLE5",
-        "asin": "B0EXAMPLE5",
-    },
-]
 
 
 def _headers() -> dict:
@@ -98,6 +49,31 @@ def _passes_smart_filter(rating: float, reviews: int, price_num: Optional[float]
     return True
 
 
+def _is_valid_image_url(url: str) -> bool:
+    if not url:
+        return False
+    if not url.startswith("http"):
+        return False
+    ext = url.lower().rsplit("?", 1)[0].rsplit(".", 1)
+    if len(ext) < 2:
+        return False
+    return ext[1] in {"jpg", "jpeg", "png"}
+
+
+def _build_amazon_url(asin: str) -> str:
+    base = f"https://www.amazon.com/dp/{asin}"
+    tag = Config.AMAZON_TAG
+    return f"{base}/?tag={tag}"
+
+
+def _verify_link(url: str, timeout: int = 5) -> bool:
+    try:
+        resp = requests.head(url, headers=_headers(), timeout=timeout, allow_redirects=True)
+        return resp.status_code == 200
+    except requests.RequestException:
+        return False
+
+
 def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
     url = f"https://www.amazon.com/s?k={keyword}&ref=nb_sb_noss"
     try:
@@ -124,7 +100,9 @@ def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
         title = title_el.get_text(strip=True)
 
         img_el = card.select_one("img.s-image")
-        image = img_el.get("src", "") if img_el else ""
+        src = img_el.get("src", "") if img_el else ""
+        data_src = img_el.get("data-src", "") if img_el else ""
+        image = data_src or src
 
         price_el = card.select_one("span.a-price span.a-offscreen")
         price = price_el.get_text(strip=True) if price_el else ""
@@ -143,13 +121,22 @@ def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
         if not _passes_smart_filter(rating, reviews, price_num):
             continue
 
+        if not _is_valid_image_url(image):
+            print(f"  [X] Invalid image URL for '{title[:50]}'. Skipping.")
+            continue
+
+        amazon_link = _build_amazon_url(asin)
+        if not _verify_link(amazon_link):
+            print(f"  [X] Amazon link unreachable for '{title[:50]}'. Skipping.")
+            continue
+
         products.append({
             "title": title,
             "price": price or f"${price_num:.2f}" if price_num else "",
             "rating": rating,
             "reviews": reviews,
             "image": image,
-            "url": f"https://www.amazon.com/dp/{asin}",
+            "url": amazon_link,
             "asin": asin,
         })
 
@@ -159,14 +146,9 @@ def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
 def get_products(
     niche: str = "home-decor",
     count: int = 3,
-    demo: bool = False,
     search_terms: list[str] | None = None,
 ) -> list[dict]:
     niche_config = NICHES.get(niche, NICHES["home-decor"])
-
-    if demo:
-        indices = niche_config["demo_products_idx"]
-        return [DEMO_PRODUCTS[i] for i in indices[:count]]
 
     terms = search_terms if search_terms else niche_config["search_terms"]
     all_products = []
@@ -178,9 +160,8 @@ def get_products(
             break
 
     if not all_products:
-        print("  [X] Amazon scraping returned no results. Falling back to demo data.")
-        indices = niche_config["demo_products_idx"]
-        return [DEMO_PRODUCTS[i] for i in indices[:count]]
+        print("  [X] Amazon scraping returned no results. No products to add.")
+        return []
 
-    all_products.sort(key=lambda p: p["rating"], reverse=True)
+    all_products.sort(key=lambda p: (1 if p["image"] else 0, p["rating"]), reverse=True)
     return all_products[:count]

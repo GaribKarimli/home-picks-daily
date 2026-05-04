@@ -5,6 +5,19 @@
 @tailwind utilities;
 
 @layer base {
+  img {
+    @apply object-cover;
+    background-color: #F0F5F2;
+  }
+
+  img[src=""],
+  img:not([src]) {
+    opacity: 0;
+    min-height: 200px;
+  }
+}
+
+@layer base {
   html {
     scroll-behavior: smooth;
   }

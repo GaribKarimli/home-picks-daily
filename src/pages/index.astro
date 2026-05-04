@@ -8,7 +8,12 @@ import CategoryTabs from '../components/CategoryTabs.astro';
 const activeNiche = Astro.url.searchParams.get('niche');
 
 const allPosts = await getCollection('posts');
-allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+allPosts.sort((a, b) => {
+  const aHasImage = a.data.image ? 1 : 0;
+  const bHasImage = b.data.image ? 1 : 0;
+  if (aHasImage !== bHasImage) return bHasImage - aHasImage;
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
 
 const posts = activeNiche
   ? allPosts.filter(p => p.data.niche === activeNiche)

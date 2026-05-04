@@ -16,7 +16,7 @@ def _run(cmd: list[str], cwd: str) -> str:
 def push_product(md_content: str, filename: str) -> str:
     repo_url = f"https://x-access-token:{Config.GITHUB_TOKEN}@github.com/{Config.REPO_PATH}.git"
     repo_dir = Path(Config.LOCAL_REPO_DIR)
-    posts_dir = repo_dir / "src" / "content" / "posts"
+    repo_posts = repo_dir / "src" / "content" / "posts"
 
     if repo_dir.exists():
         shutil.rmtree(repo_dir)
@@ -24,9 +24,8 @@ def push_product(md_content: str, filename: str) -> str:
     print(f"  [git] Cloning {Config.REPO_PATH}...")
     _run(["git", "clone", repo_url, str(repo_dir)], cwd=".")
 
-    posts_dir.mkdir(parents=True, exist_ok=True)
-
-    file_path = posts_dir / filename
+    file_path = repo_posts / filename
+    file_path.parent.mkdir(parents=True, exist_ok=True)
     file_path.write_text(md_content, encoding="utf-8")
 
     _run(["git", "add", f"src/content/posts/{filename}"], cwd=str(repo_dir))

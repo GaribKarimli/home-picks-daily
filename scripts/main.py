@@ -3,11 +3,11 @@
 Home Picks Daily - Multi-Niche Affiliate Content Automation
 
 Usage:
-  python -m scripts.main --niche home-decor --count 3 --demo
+  python -m scripts.main --niche home-decor --count 3
   python -m scripts.main --niche tech-gadgets --count 5
   python -m scripts.main --niche fitness-equipment --count 2 --trending
   python -m scripts.main --niche kitchen-essentials --count 4 --no-push
-  python -m scripts.main --all-niches --count 2 --demo --no-push
+  python -m scripts.main --all-niches --count 2 --no-push
 """
 
 import argparse
@@ -52,7 +52,6 @@ trending: {"true" if post.get("trending") else "false"}
 def run_niche(
     niche: str,
     count: int,
-    demo: bool,
     push: bool,
     use_trends: bool,
 ):
@@ -66,9 +65,9 @@ def run_niche(
         if search_terms:
             print(f"  {CHECK} Trending terms: {', '.join(search_terms)}")
 
-    products = get_products(niche, count, demo=demo, search_terms=search_terms)
+    products = get_products(niche, count, search_terms=search_terms)
     if not products:
-        print(f"  {CROSS} No products found for {niche}.")
+        print(f"  {CROSS} No products found for {niche}. Product data is incomplete.")
         return
 
     print(f"  {CHECK} Got {len(products)} products\n")
@@ -79,15 +78,15 @@ def run_niche(
         post = generate_post(product, niche)
 
         md = build_markdown(post)
-        filename = f"{niche}--{post['slug']}.md"
-        local_path = Path("src/content/posts") / filename
+        filename = f"{post['slug']}.md"
+        local_path = Path("src/content/posts") / niche / filename
         local_path.parent.mkdir(parents=True, exist_ok=True)
         local_path.write_text(md, encoding="utf-8")
         print(f"  {CHECK} Saved locally: {local_path}")
 
         if push:
             try:
-                push_product(md, filename)
+                push_product(md, f"{niche}/{filename}")
             except RuntimeError as e:
                 print(f"  {CROSS} GitHub push failed: {e}")
                 print(f"  {ARROW} File saved locally - push manually later.")
@@ -120,11 +119,6 @@ def main():
         help="Products per niche (default: 3)",
     )
     parser.add_argument(
-        "--demo",
-        action="store_true",
-        help="Use demo products instead of live Amazon scraping",
-    )
-    parser.add_argument(
         "--trending",
         action="store_true",
         help="Use Google Trends data to find trending products",
@@ -143,10 +137,7 @@ def main():
         Config.validate()
     except ValueError as e:
         print(f"[ERROR] {e}")
-        if args.demo:
-            print("[~] Continuing in demo mode with local save only...")
-        else:
-            sys.exit(1)
+        sys.exit(1)
 
     niches_to_run = list(NICHES.keys()) if args.all_niches else [args.niche]
 
@@ -154,7 +145,6 @@ def main():
         run_niche(
             niche=niche,
             count=args.count,
-            demo=args.demo,
             push=not args.no_push,
             use_trends=args.trending,
         )
