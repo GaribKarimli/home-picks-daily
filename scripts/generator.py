@@ -2,9 +2,10 @@ import re
 import time
 import random
 from datetime import date
+from typing import Optional
 
-from google import genai
-from google.genai import errors
+from google import genai as google_genai
+from google.genai import errors as google_errors
 
 from scripts.config import Config, NICHES
 
@@ -75,10 +76,41 @@ def _parse_retry_delay(msg: str) -> float | None:
 
 
 def generate_post(product: dict, niche: str) -> dict:
-    client = genai.Client(api_key=Config.GEMINI_API_KEY)
     prompt = _build_product_prompt(product, niche)
 
-    last_error = None
+    if Config.GROQ_API_KEY:
+        result = _try_groq(prompt, product, niche)
+        if result:
+            return result
+
+    if Config.GEMINI_API_KEY:
+        result = _try_gemini(prompt, product, niche)
+        if result:
+            return result
+
+    print(f"  [~] No LLM available. Using fallback content for: {product['title']}")
+    return _fallback_post(product, niche)
+
+
+def _try_groq(prompt: str, product: dict, niche: str) -> Optional[dict]:
+    try:
+        from groq import Groq
+        client = Groq(api_key=Config.GROQ_API_KEY)
+        response = client.chat.completions.create(
+            model="llama-3.1-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=1024,
+        )
+        text = response.choices[0].message.content.strip()
+        return _parse_response(text, product, niche)
+    except Exception as e:
+        print(f"  [WARN] Groq API call failed: {e}")
+        return None
+
+
+def _try_gemini(prompt: str, product: dict, niche: str) -> Optional[dict]:
+    client = google_genai.Client(api_key=Config.GEMINI_API_KEY)
+
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             response = client.models.generate_content(
@@ -88,34 +120,32 @@ def generate_post(product: dict, niche: str) -> dict:
             text = response.text.strip()
             return _parse_response(text, product, niche)
 
-        except errors.ClientError as e:
+        except google_errors.ClientError as e:
             msg = str(e)
             code = getattr(e, 'code', None) or getattr(getattr(e, 'response', None), 'status_code', 0)
 
             if code != 429:
-                raise
+                print(f"  [WARN] Gemini error (non-rate-limit): {e}")
+                return None
 
             if _is_daily_quota_error(msg):
-                print(f"  [~] Daily quota exhausted (429). Skipping retry.")
-                last_error = e
-                break
+                print(f"  [~] Gemini daily quota exhausted. Skipping retry.")
+                return None
 
             retry_after = _parse_retry_delay(msg)
             delay = retry_after if retry_after else BASE_DELAY * (2 ** (attempt - 1)) + random.uniform(0, 2)
 
             if attempt < MAX_RETRIES:
-                print(f"  [~] Rate limited (429). Retrying in {delay:.0f}s... ({attempt}/{MAX_RETRIES})")
+                print(f"  [~] Gemini rate limited (429). Retrying in {delay:.0f}s... ({attempt}/{MAX_RETRIES})")
                 time.sleep(delay)
             else:
-                last_error = e
+                print(f"  [WARN] Gemini rate limited after {MAX_RETRIES} retries.")
 
         except Exception as e:
-            last_error = e
-            break
+            print(f"  [WARN] Gemini API call failed: {e}")
+            return None
 
-    print(f"  [WARN] Gemini API call failed after {attempt} attempt(s): {last_error}")
-    print(f"  [~] Using fallback content for: {product['title']}")
-    return _fallback_post(product, niche)
+    return None
 
 
 def _fallback_post(product: dict, niche: str) -> dict:

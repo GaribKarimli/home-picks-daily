@@ -44,6 +44,7 @@ SMART_FILTERS = {
 
 class Config:
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
     AMAZON_TAG: str = os.getenv("AMAZON_TAG", "dummy-20")
     GITHUB_TOKEN: str = os.getenv("GITHUB_TOKEN", "")
     REPO_PATH: str = os.getenv("REPO_PATH", "GaribKarimli/home-picks-daily")
@@ -53,8 +54,8 @@ class Config:
     @classmethod
     def validate(cls):
         missing = []
-        if not cls.GEMINI_API_KEY:
-            missing.append("GEMINI_API_KEY")
+        if not cls.GEMINI_API_KEY and not cls.GROQ_API_KEY:
+            missing.append("GEMINI_API_KEY or GROQ_API_KEY")
         if not cls.GITHUB_TOKEN:
             missing.append("GITHUB_TOKEN")
         if missing:
