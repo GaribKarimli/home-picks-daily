@@ -134,7 +134,7 @@ def main():
         parser.error("Specify --niche <name> or --all-niches")
 
     try:
-        Config.validate()
+        Config.validate(push_required=not args.no_push)
     except ValueError as e:
         print(f"[ERROR] {e}")
         sys.exit(1)

@@ -1,47 +1,151 @@
 {
-  "_note": "Replace placeholder ASINs and images with real ones.",
-  "_howto_asin": "Find ASIN in Amazon URL: amazon.com/dp/B0XXXXXXXXX",
-  "_howto_image": "Right-click product image on Amazon -> Copy image address -> paste below",
+  "_note": "Only real Amazon products with real Amazon CDN images will be accepted. Placeholder ASINs (B0EXAMPLE*) and non-Amazon images are automatically skipped.",
+  "_howto_asin": "Find ASIN in Amazon URL: amazon.com/dp/B0XXXXXXXXX (10 characters, starts with B0)",
+  "_howto_image": "Right-click product image on Amazon -> Copy image address -> paste below (must start with https://m.media-amazon.com)",
   "products": [
-    {
-      "title": "Smart Kitchen Scale with Nutritional Database",
-      "price": "$29.99",
-      "rating": 4.5,
-      "reviews": 1250,
-      "image": "https://picsum.photos/seed/kitchen-scale/800/1000",
-      "asin": "B0EXAMPLE1"
+{
+      "title": "Dash Rapid Egg Cooker - Boiler, Poacher & Steamer - Includes Measuring & Recipe Guide - Dishwasher Safe - BPA Free - Holds 7 Eggs, Black",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/51lILkbQ4zL._AC_SL1500_.jpg",
+      "asin": "B0D3W6XGLR"
     },
     {
-      "title": "Minimalist Bamboo Wall Clock Silent Movement",
-      "price": "$39.99",
-      "rating": 4.7,
-      "reviews": 3200,
-      "image": "https://picsum.photos/seed/bamboo-clock/800/1000",
-      "asin": "B0EXAMPLE2"
+      "title": "Umite Chef Kitchen Cooking Utensils Set, 33 pcs Non-Stick Silicone Cooking Kitchen Utensils Spatula Set with Holder, Wooden Handle Silicone Kitchen Gadgets Utensil Set (Khaki)",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/615CbF7dxCL._AC_SL1500_.jpg",
+      "asin": "B08573DQ39"
     },
     {
-      "title": "Wireless Noise-Cancelling Earbuds Bluetooth 5.3",
-      "price": "$59.99",
-      "rating": 4.6,
-      "reviews": 8500,
-      "image": "https://picsum.photos/seed/wireless-earbuds/800/1000",
-      "asin": "B0EXAMPLE3"
+      "title": "Steam Cleaner, Portable Steamer for Cleaning with 16pcs Accessories, 6-Level Adjustable and 15s Heat-Up, Handheld Steam Cleaner for Home, Tile, Dirt, Grout, Grease, Car Detailing",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/71qb8zK+lYL._AC_SL1500_.jpg",
+      "asin": "B0FR4NZN55"
     },
     {
-      "title": "Smart Fitness Tracker with Heart Rate Monitor",
-      "price": "$49.99",
-      "rating": 4.4,
-      "reviews": 15000,
-      "image": "https://picsum.photos/seed/fitness-tracker/800/1000",
-      "asin": "B0EXAMPLE4"
+      "title": "Amazon Basics Digital Kitchen Scale with LCD Display, Tare Function, Multiple Units, Weighs up to 11 Pounds, Batteries Included, Black and Stainless Steel",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/71eiII6MS-L._AC_SL1500_.jpg",
+      "asin": "B06X9NQ8GX"
     },
     {
-      "title": "Premium Yoga Mat Extra Thick Non-Slip",
-      "price": "$34.99",
-      "rating": 4.5,
-      "reviews": 28000,
-      "image": "https://picsum.photos/seed/yoga-mat/800/1000",
-      "asin": "B0EXAMPLE5"
+      "title": "O-Cedar EasyWring Microfiber Spin Mop & Bucket Floor Cleaning System + 2 Extra Refills, Red/Gray",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/81ymYkfT+WL._AC_SL1500_.jpg",
+      "asin": "B07VWL357N"
+    },
+    {
+      "title": "Cisily Sponge Holder for Kitchen Sink, Sink Caddy Organizer with High Brush Holder, Kitchen Countertop Organizers and Storage Essentials, Rustproof 304 Stainless Steel (Black, 9.25″)",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/81shIEM-H2L._AC_SL1500_.jpg",
+      "asin": "B0C3QZ7SNF"
+    },
+    {
+      "title": "Mixing Bowls with Airtight Lids Set, 26PCS Stainless Steel Khaki Bowls with Grater Attachments, Non-Slip Bottoms & Kitchen Gadgets Set, Size 7, 4, 2.5, 2.0,1.5, 1QT, Great for Mixing & Serving",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/71XR3lo00cL._AC_SL1500_.jpg",
+      "asin": "B0BWHJ1FNK"
+    },
+    {
+      "title": "Amazon Echo Show 5 (newest model), Smart display, Designed for Alexa+, 2x the bass and clearer sound, Glacier White",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/81pKuygsQaL._AC_SL1500_.jpg",
+      "asin": "B09B2QTGFY"
+    },
+    {
+      "title": "Astercook Deep-Carbonized Bamboo Cutting Boards for Kitchen with Wood Storage Stand, Reversible Charcuterie & Chopping Boards with Juice Grooves and Easy-Grip Handles, Mothers Day Gifts",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/91xky+JYmZL._AC_SL1500_.jpg",
+      "asin": "B0FH6YL3XC"
+    },
+    {
+      "title": "ARKNOAH Salt and Pepper Grinder Set 2-Pack with Stand, Adjustable Coarseness Mill - Aerospace Aluminum Body, Stainless Steel & Ceramic Core, Refillable Spice Grinders for Kitchen & BBQ",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/614Z-y7eRRL._AC_SL1500_.jpg",
+      "asin": "B0FLVHKKG5"
+    },
+    {
+      "title": "Astercook 19 Pcs Pots and Pans Set Non Stick, Black Titanium Induction Kitchen Cookware Sets, Non toxic Healthy Kitchen Cooking Set with Frying Pans Set, PFAS PTFE PFOA PFOS Free, Mothers Day Gifts",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/71vF947HUVL._AC_SL1500_.jpg",
+      "asin": "B0FBWFB42X"
+    },
+    {
+      "title": "Unbleached Parchment Paper Baking Sheets, 9x13IN Precut Non-Stick Parchment Paper for Baking, Grilling, Air Fryer, Steaming-70 Sheets Unbleached Parchment Sheets for Bread Cup Cake Cookie And More",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/71lCn+5mdZL._AC_SL1500_.jpg",
+      "asin": "B0D3PWHQD9"
+    },
+    {
+      "title": "Infinity™ Sponge, Odor-Resistant, Heat Resistant, Silver Fiber, Multi-Purpose Kitchen Cleaning (3)",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/61KnKVicT0L._AC_SL1500_.jpg",
+      "asin": "B0GWF75Z2J"
+    },
+    {
+      "title": "TrendPlain 16oz/470ml Glass Olive Oil Sprayer for Cooking – 2 in 1 Olive Oil Dispenser Bottle for Kitchen Gadgets and Air Fryer Accessories, Salad, BBQ - Black",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/716HuBmcRsL._AC_SL1500_.jpg",
+      "asin": "B0CJF94M8J"
+    },
+    {
+      "title": "Magic Bullet Blender, Small, Silver, 11 Piece Set",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/61w2Tj7r0BL._AC_SL1500_.jpg",
+      "asin": "B012T634SM"
+    },
+    {
+      "title": "Ukeetap Multi-Purpose Pull-Out Storage Organizers, Under Sink/Cabinet Organizers and Storage for Bathroom & Kitchen, Black, 12.8 Inches, 2 Packs",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/811uMdiQm7L._AC_SL1500_.jpg",
+      "asin": "B0DNTQ2YNT"
+    },
+    {
+      "title": "ukeetap Extra Large Expandable Silverware Organizer, BPA-Free Food-Safe Cutlery Flatware Organizer, Kitchen Utensil Drawer Organizer, Adjustable Silverware Holder for Spoons Forks Knives, Black",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/711fUeua6GL._AC_SL1500_.jpg",
+      "asin": "B0F2TB2MMP"
+    },
+    {
+      "title": "bella 2 Slice Slim Toaster, Fits-anywhere™ Kitchenware, 6 Setting Shade Control with Reheat & Cancel Buttons, Fits Sourdough, 10” Long Slot, Anti Jam & Auto Shutoff, 900 Watt, Surf",
+      "price": "",
+      "rating": 0.0,
+      "reviews": 0,
+      "image": "https://m.media-amazon.com/images/I/71E8oF06f+L._AC_SL1500_.jpg",
+      "asin": "B0CZPGJ2JW"
     }
   ]
 }

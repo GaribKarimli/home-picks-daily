@@ -10,71 +10,15 @@ from bs4 import BeautifulSoup
 from scripts.config import Config, NICHES, SMART_FILTERS
 
 
-def _load_my_products() -> list[dict]:
+def _reload_my_products() -> list[dict]:
     path = Path("scripts/my_products.json")
     if not path.exists():
         return []
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
-        products = data.get("products", [])
-        placeholders = sum(1 for p in products if "EXAMPLE" in p.get("asin", ""))
-        if placeholders == len(products):
-            print("  [!] my_products.json has only placeholder ASINs (B0EXAMPLE*). Links won't work on Amazon.")
-            print("  [!] Edit scripts/my_products.json and replace ASINs with real ones.")
-        return products
+        return data.get("products", [])
     except Exception:
         return []
-
-
-MY_PRODUCTS = _load_my_products()
-
-DEMO_PRODUCTS = MY_PRODUCTS or [
-    {
-        "title": "Smart Kitchen Scale with Nutritional Database",
-        "price": "$29.99",
-        "rating": 4.5,
-        "reviews": 1250,
-        "image": "https://images.unsplash.com/photo-1584479898061-15742e1c2180?w=800&q=80",
-        "url": "https://www.amazon.com/dp/B0EXAMPLE1",
-        "asin": "B0EXAMPLE1",
-    },
-    {
-        "title": "Minimalist Bamboo Wall Clock Silent Movement",
-        "price": "$39.99",
-        "rating": 4.7,
-        "reviews": 3200,
-        "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbea78?w=800&q=80",
-        "url": "https://www.amazon.com/dp/B0EXAMPLE2",
-        "asin": "B0EXAMPLE2",
-    },
-    {
-        "title": "Wireless Noise-Cancelling Earbuds Bluetooth 5.3",
-        "price": "$59.99",
-        "rating": 4.6,
-        "reviews": 8500,
-        "image": "https://images.unsplash.com/photo-1590658268037-6bf12f032f55?w=800&q=80",
-        "url": "https://www.amazon.com/dp/B0EXAMPLE3",
-        "asin": "B0EXAMPLE3",
-    },
-    {
-        "title": "Smart Fitness Tracker with Heart Rate Monitor",
-        "price": "$49.99",
-        "rating": 4.4,
-        "reviews": 15000,
-        "image": "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w=800&q=80",
-        "url": "https://www.amazon.com/dp/B0EXAMPLE4",
-        "asin": "B0EXAMPLE4",
-    },
-    {
-        "title": "Premium Yoga Mat Extra Thick Non-Slip",
-        "price": "$34.99",
-        "rating": 4.5,
-        "reviews": 28000,
-        "image": "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=800&q=80",
-        "url": "https://www.amazon.com/dp/B0EXAMPLE5",
-        "asin": "B0EXAMPLE5",
-    },
-]
 
 
 def _headers() -> dict:
@@ -129,6 +73,14 @@ def _is_valid_image_url(url: str) -> bool:
     return ext[1] in {"jpg", "jpeg", "png"}
 
 
+def _is_amazon_image(url: str) -> bool:
+    return url.startswith("https://m.media-amazon.com")
+
+
+def _is_real_asin(asin: str) -> bool:
+    return bool(re.fullmatch(r"B0[A-Z0-9]{8,}", asin))
+
+
 def _build_amazon_url(asin: str) -> str:
     base = f"https://www.amazon.com/dp/{asin}"
     tag = Config.AMAZON_TAG
@@ -141,6 +93,19 @@ def _verify_link(url: str, timeout: int = 5) -> bool:
         return resp.status_code == 200
     except requests.RequestException:
         return False
+
+
+def _validate_product(product: dict) -> bool:
+    asin = product.get("asin", "")
+    image = product.get("image", "")
+    title = product.get("title", "?")
+    if not _is_real_asin(asin):
+        print(f"  [X] Skipping invalid product '{title[:50]}': ASIN '{asin}' is not a real Amazon ASIN.")
+        return False
+    if not _is_amazon_image(image):
+        print(f"  [X] Skipping invalid product '{title[:50]}': image is not from Amazon CDN.")
+        return False
+    return True
 
 
 def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
@@ -212,26 +177,35 @@ def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
     return products
 
 
+def _get_json_products() -> list[dict]:
+    raw = _reload_my_products()
+    valid = []
+    for p in raw:
+        if _validate_product(p):
+            p["url"] = _build_amazon_url(p["asin"])
+            valid.append(p)
+    return valid
+
+
 def get_products(
     niche: str = "home-decor",
     count: int = 3,
     search_terms: list[str] | None = None,
 ) -> list[dict]:
     niche_config = NICHES.get(niche, NICHES["home-decor"])
+    all_products = _get_json_products()
+
+    if len(all_products) >= count:
+        return all_products[:count]
 
     terms = search_terms if search_terms else niche_config["search_terms"]
-    all_products = []
-
     for term in terms:
-        products = search_amazon(term, max_results=count)
-        all_products.extend(products)
+        scraped = search_amazon(term, max_results=count)
+        for p in scraped:
+            if _validate_product(p):
+                all_products.append(p)
         if len(all_products) >= count:
             break
-
-    if not all_products:
-        print("  [X] Amazon scraping returned no results. Falling back to demo data.")
-        indices = niche_config["demo_products_idx"]
-        return [DEMO_PRODUCTS[i] for i in indices[:count]]
 
     all_products.sort(key=lambda p: (1 if p["image"] else 0, p["rating"]), reverse=True)
     return all_products[:count]
