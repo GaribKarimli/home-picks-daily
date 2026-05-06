@@ -5,8 +5,6 @@ import ProductCard from '../components/ProductCard.astro';
 import CategoryCard from '../components/CategoryCard.astro';
 import CategoryTabs from '../components/CategoryTabs.astro';
 
-const activeNiche = Astro.url.searchParams.get('niche');
-
 const allPosts = await getCollection('posts');
 allPosts.sort((a, b) => {
   const aHasImage = a.data.image ? 1 : 0;
@@ -14,10 +12,6 @@ allPosts.sort((a, b) => {
   if (aHasImage !== bHasImage) return bHasImage - aHasImage;
   return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
 });
-
-const posts = activeNiche
-  ? allPosts.filter(p => p.data.niche === activeNiche)
-  : allPosts;
 
 const categories = [
   { name: 'Home Decor', slug: 'home-decor', description: 'Beautiful accents to elevate your living space' },
@@ -62,11 +56,11 @@ const categories = [
     <div class="flex items-center justify-between mb-8">
       <h2 class="text-2xl font-display font-semibold text-dark">Featured Products</h2>
     </div>
-    <CategoryTabs active={activeNiche || 'all'} />
+    <CategoryTabs active="all" />
 
-    {posts.length > 0 ? (
+    {allPosts.length > 0 ? (
       <div class="pinterest-grid">
-        {posts.map(post => <ProductCard post={post} />)}
+        {allPosts.map(post => <ProductCard post={post} />)}
       </div>
     ) : (
       <div class="text-center py-20">

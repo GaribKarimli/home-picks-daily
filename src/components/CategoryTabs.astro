@@ -6,21 +6,20 @@ interface Props {
 const { active } = Astro.props;
 
 const tabs = [
-  { id: 'all', label: 'All' },
-  { id: 'home-decor', label: 'Home Decor' },
-  { id: 'tech-gadgets', label: 'Tech' },
-  { id: 'fitness-equipment', label: 'Fitness' },
-  { id: 'kitchen-essentials', label: 'Kitchen' },
+  { id: 'all', label: 'All', href: '/' },
+  { id: 'home-decor', label: 'Home Decor', href: '/categories/home-decor/' },
+  { id: 'tech-gadgets', label: 'Tech', href: '/categories/tech-gadgets/' },
+  { id: 'fitness-equipment', label: 'Fitness', href: '/categories/fitness-equipment/' },
+  { id: 'kitchen-essentials', label: 'Kitchen', href: '/categories/kitchen-essentials/' },
 ];
 ---
 
 <nav class="flex flex-wrap gap-2 mb-12">
   {tabs.map(tab => {
-    const href = tab.id === 'all' ? '/' : `/?niche=${tab.id}`;
     const isActive = active === tab.id || (!active && tab.id === 'all');
     return (
       <a
-        href={href}
+        href={tab.href}
         class={`
           px-5 py-2.5 text-xs font-medium uppercase tracking-widest transition-all duration-500
           ${isActive

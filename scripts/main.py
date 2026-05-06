@@ -49,12 +49,20 @@ trending: {"true" if post.get("trending") else "false"}
 """
 
 
+def _clean_niche_dir(niche: str):
+    path = Path("src/content/posts") / niche
+    if path.exists():
+        for f in path.glob("*.md"):
+            f.unlink()
+
+
 def run_niche(
     niche: str,
     count: int,
     push: bool,
     use_trends: bool,
 ):
+    _clean_niche_dir(niche)
     print(f"  {STAR} Niche: {NICHES[niche]['name']}")
     print(f"  {STAR} Fetching {count} products...")
 
