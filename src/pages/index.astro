@@ -31,26 +31,37 @@ const categories = [
   title="Home Finds — Curated Home, Tech, Fitness &amp; Kitchen Products"
   description="Discover trending products across home decor, tech gadgets, fitness equipment, and kitchen essentials."
 >
-  <section class="py-16 md:py-20">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-dark tracking-tight leading-tight">
+  <section class="pt-32 pb-20 md:pt-40 md:pb-24">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <span class="text-xs font-medium text-secondary uppercase tracking-[0.2em]">Curated Collection</span>
+      <h1 class="mt-6 text-5xl md:text-7xl lg:text-8xl font-display font-bold text-dark tracking-tight leading-[1.05]">
         Discover Your Next Find
       </h1>
-      <p class="mt-4 text-base md:text-lg text-secondary max-w-2xl mx-auto leading-relaxed font-sans">
+      <p class="mt-6 text-base md:text-lg text-secondary max-w-xl mx-auto leading-relaxed font-sans tracking-wide">
         Trending products across home decor, tech, fitness &amp; kitchen — curated daily.
       </p>
+      <div class="mt-10 flex items-center justify-center gap-4">
+        <a href="/categories/" class="btn-primary">Browse All</a>
+        <a href="/about/" class="btn-outline">About</a>
+      </div>
     </div>
   </section>
 
-  <section class="max-w-6xl mx-auto px-4 pb-16">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+  <section class="max-w-7xl mx-auto px-6 pb-20">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-2xl font-display font-semibold text-dark">Shop by Category</h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
       {categories.map(cat => (
         <CategoryCard name={cat.name} slug={cat.slug} description={cat.description} />
       ))}
     </div>
   </section>
 
-  <section class="max-w-6xl mx-auto px-4 pb-20">
+  <section class="max-w-7xl mx-auto px-6 pb-24">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-2xl font-display font-semibold text-dark">Featured Products</h2>
+    </div>
     <CategoryTabs active={activeNiche || 'all'} />
 
     {posts.length > 0 ? (
@@ -58,7 +69,13 @@ const categories = [
         {posts.map(post => <ProductCard post={post} />)}
       </div>
     ) : (
-      <p class="text-center text-secondary py-16 font-sans">No products in this category yet. Check back soon!</p>
+      <div class="text-center py-20">
+        <p class="text-secondary text-lg font-display">No products in this category yet</p>
+        <p class="text-secondary/60 text-sm mt-2">Check back soon for new additions</p>
+        <a href="/" class="inline-block mt-6 text-sm font-medium text-dark underline underline-offset-4 hover:opacity-60 transition-opacity">
+          View all products &rarr;
+        </a>
+      </div>
     )}
   </section>
 </BaseLayout>

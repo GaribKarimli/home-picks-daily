@@ -29,11 +29,16 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-block text-center bg-dark text-white font-medium text-sm uppercase tracking-widest py-3 px-8 transition-all duration-300 hover:opacity-90 active:scale-[0.98];
+    @apply inline-block text-center bg-dark text-white font-medium text-sm uppercase tracking-widest py-4 px-10 transition-all duration-500 hover:bg-charcoal active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply inline-block text-center border border-dark text-dark font-medium text-sm uppercase tracking-widest py-4 px-10 transition-all duration-500 hover:bg-dark hover:text-white active:scale-[0.98];
   }
 }

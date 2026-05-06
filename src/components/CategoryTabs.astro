@@ -14,7 +14,7 @@ const tabs = [
 ];
 ---
 
-<nav class="flex flex-wrap gap-2 mb-10">
+<nav class="flex flex-wrap gap-2 mb-12">
   {tabs.map(tab => {
     const href = tab.id === 'all' ? '/' : `/?niche=${tab.id}`;
     const isActive = active === tab.id || (!active && tab.id === 'all');
@@ -22,10 +22,10 @@ const tabs = [
       <a
         href={href}
         class={`
-          px-4 py-2 text-sm font-medium transition-all duration-300
+          px-5 py-2.5 text-xs font-medium uppercase tracking-widest transition-all duration-500
           ${isActive
             ? 'bg-dark text-white'
-            : 'bg-white text-secondary hover:text-dark border border-border'
+            : 'bg-white text-secondary hover:text-dark border border-border/60 hover:border-dark/30'
           }
         `}
       >
