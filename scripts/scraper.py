@@ -177,10 +177,12 @@ def search_amazon(keyword: str, max_results: int = 5) -> list[dict]:
     return products
 
 
-def _get_json_products() -> list[dict]:
+def _get_json_products(niche: str = "") -> list[dict]:
     raw = _reload_my_products()
     valid = []
     for p in raw:
+        if niche and p.get("niche", "") != niche:
+            continue
         if _validate_product(p):
             p["url"] = _build_amazon_url(p["asin"])
             valid.append(p)
@@ -193,7 +195,7 @@ def get_products(
     search_terms: list[str] | None = None,
 ) -> list[dict]:
     niche_config = NICHES.get(niche, NICHES["home-decor"])
-    all_products = _get_json_products()
+    all_products = _get_json_products(niche)
 
     if len(all_products) >= count:
         return all_products[:count]

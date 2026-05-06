@@ -1,15 +1,13 @@
 {
-  "_note": "Only real Amazon products with real Amazon CDN images will be accepted. Placeholder ASINs (B0EXAMPLE*) and non-Amazon images are automatically skipped.",
-  "_howto_asin": "Find ASIN in Amazon URL: amazon.com/dp/B0XXXXXXXXX (10 characters, starts with B0)",
-  "_howto_image": "Right-click product image on Amazon -> Copy image address -> paste below (must start with https://m.media-amazon.com)",
   "products": [
-{
+    {
       "title": "Dash Rapid Egg Cooker - Boiler, Poacher & Steamer - Includes Measuring & Recipe Guide - Dishwasher Safe - BPA Free - Holds 7 Eggs, Black",
       "price": "",
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/51lILkbQ4zL._AC_SL1500_.jpg",
-      "asin": "B0D3W6XGLR"
+      "asin": "B0D3W6XGLR",
+      "niche": "kitchen-essentials"
     },
     {
       "title": "Umite Chef Kitchen Cooking Utensils Set, 33 pcs Non-Stick Silicone Cooking Kitchen Utensils Spatula Set with Holder, Wooden Handle Silicone Kitchen Gadgets Utensil Set (Khaki)",
@@ -17,7 +15,8 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/615CbF7dxCL._AC_SL1500_.jpg",
-      "asin": "B08573DQ39"
+      "asin": "B08573DQ39",
+      "niche": "kitchen-essentials"
     },
     {
       "title": "Steam Cleaner, Portable Steamer for Cleaning with 16pcs Accessories, 6-Level Adjustable and 15s Heat-Up, Handheld Steam Cleaner for Home, Tile, Dirt, Grout, Grease, Car Detailing",
@@ -25,15 +24,8 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/71qb8zK+lYL._AC_SL1500_.jpg",
-      "asin": "B0FR4NZN55"
-    },
-    {
-      "title": "Amazon Basics Digital Kitchen Scale with LCD Display, Tare Function, Multiple Units, Weighs up to 11 Pounds, Batteries Included, Black and Stainless Steel",
-      "price": "",
-      "rating": 0.0,
-      "reviews": 0,
-      "image": "https://m.media-amazon.com/images/I/71eiII6MS-L._AC_SL1500_.jpg",
-      "asin": "B06X9NQ8GX"
+      "asin": "B0FR4NZN55",
+"niche": "fitness-equipment"
     },
     {
       "title": "O-Cedar EasyWring Microfiber Spin Mop & Bucket Floor Cleaning System + 2 Extra Refills, Red/Gray",
@@ -41,15 +33,17 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/81ymYkfT+WL._AC_SL1500_.jpg",
-      "asin": "B07VWL357N"
+      "asin": "B07VWL357N",
+      "niche": "home-decor"
     },
     {
-      "title": "Cisily Sponge Holder for Kitchen Sink, Sink Caddy Organizer with High Brush Holder, Kitchen Countertop Organizers and Storage Essentials, Rustproof 304 Stainless Steel (Black, 9.25″)",
+      "title": "Cisily Sponge Holder for Kitchen Sink, Sink Caddy Organizer with High Brush Holder, Kitchen Countertop Organizers and Storage Essentials, Rustproof 304 Stainless Steel (Black, 9.25\u2033)",
       "price": "",
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/81shIEM-H2L._AC_SL1500_.jpg",
-      "asin": "B0C3QZ7SNF"
+      "asin": "B0C3QZ7SNF",
+      "niche": "home-decor"
     },
     {
       "title": "Mixing Bowls with Airtight Lids Set, 26PCS Stainless Steel Khaki Bowls with Grater Attachments, Non-Slip Bottoms & Kitchen Gadgets Set, Size 7, 4, 2.5, 2.0,1.5, 1QT, Great for Mixing & Serving",
@@ -57,7 +51,8 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/71XR3lo00cL._AC_SL1500_.jpg",
-      "asin": "B0BWHJ1FNK"
+      "asin": "B0BWHJ1FNK",
+      "niche": "kitchen-essentials"
     },
     {
       "title": "Amazon Echo Show 5 (newest model), Smart display, Designed for Alexa+, 2x the bass and clearer sound, Glacier White",
@@ -65,7 +60,8 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/81pKuygsQaL._AC_SL1500_.jpg",
-      "asin": "B09B2QTGFY"
+      "asin": "B09B2QTGFY",
+      "niche": "tech-gadgets"
     },
     {
       "title": "Astercook Deep-Carbonized Bamboo Cutting Boards for Kitchen with Wood Storage Stand, Reversible Charcuterie & Chopping Boards with Juice Grooves and Easy-Grip Handles, Mothers Day Gifts",
@@ -73,7 +69,8 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/91xky+JYmZL._AC_SL1500_.jpg",
-      "asin": "B0FH6YL3XC"
+      "asin": "B0FH6YL3XC",
+      "niche": "kitchen-essentials"
     },
     {
       "title": "ARKNOAH Salt and Pepper Grinder Set 2-Pack with Stand, Adjustable Coarseness Mill - Aerospace Aluminum Body, Stainless Steel & Ceramic Core, Refillable Spice Grinders for Kitchen & BBQ",
@@ -81,7 +78,8 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/614Z-y7eRRL._AC_SL1500_.jpg",
-      "asin": "B0FLVHKKG5"
+      "asin": "B0FLVHKKG5",
+      "niche": "kitchen-essentials"
     },
     {
       "title": "Astercook 19 Pcs Pots and Pans Set Non Stick, Black Titanium Induction Kitchen Cookware Sets, Non toxic Healthy Kitchen Cooking Set with Frying Pans Set, PFAS PTFE PFOA PFOS Free, Mothers Day Gifts",
@@ -89,7 +87,8 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/71vF947HUVL._AC_SL1500_.jpg",
-      "asin": "B0FBWFB42X"
+      "asin": "B0FBWFB42X",
+      "niche": "kitchen-essentials"
     },
     {
       "title": "Unbleached Parchment Paper Baking Sheets, 9x13IN Precut Non-Stick Parchment Paper for Baking, Grilling, Air Fryer, Steaming-70 Sheets Unbleached Parchment Sheets for Bread Cup Cake Cookie And More",
@@ -97,23 +96,26 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/71lCn+5mdZL._AC_SL1500_.jpg",
-      "asin": "B0D3PWHQD9"
+      "asin": "B0D3PWHQD9",
+      "niche": "kitchen-essentials"
     },
     {
-      "title": "Infinity™ Sponge, Odor-Resistant, Heat Resistant, Silver Fiber, Multi-Purpose Kitchen Cleaning (3)",
+      "title": "Infinity\u2122 Sponge, Odor-Resistant, Heat Resistant, Silver Fiber, Multi-Purpose Kitchen Cleaning (3)",
       "price": "",
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/61KnKVicT0L._AC_SL1500_.jpg",
-      "asin": "B0GWF75Z2J"
+      "asin": "B0GWF75Z2J",
+      "niche": "home-decor"
     },
     {
-      "title": "TrendPlain 16oz/470ml Glass Olive Oil Sprayer for Cooking – 2 in 1 Olive Oil Dispenser Bottle for Kitchen Gadgets and Air Fryer Accessories, Salad, BBQ - Black",
+      "title": "TrendPlain 16oz/470ml Glass Olive Oil Sprayer for Cooking \u2013 2 in 1 Olive Oil Dispenser Bottle for Kitchen Gadgets and Air Fryer Accessories, Salad, BBQ - Black",
       "price": "",
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/716HuBmcRsL._AC_SL1500_.jpg",
-      "asin": "B0CJF94M8J"
+      "asin": "B0CJF94M8J",
+      "niche": "kitchen-essentials"
     },
     {
       "title": "Magic Bullet Blender, Small, Silver, 11 Piece Set",
@@ -121,7 +123,8 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/61w2Tj7r0BL._AC_SL1500_.jpg",
-      "asin": "B012T634SM"
+      "asin": "B012T634SM",
+      "niche": "fitness-equipment"
     },
     {
       "title": "Ukeetap Multi-Purpose Pull-Out Storage Organizers, Under Sink/Cabinet Organizers and Storage for Bathroom & Kitchen, Black, 12.8 Inches, 2 Packs",
@@ -129,7 +132,8 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/811uMdiQm7L._AC_SL1500_.jpg",
-      "asin": "B0DNTQ2YNT"
+      "asin": "B0DNTQ2YNT",
+      "niche": "home-decor"
     },
     {
       "title": "ukeetap Extra Large Expandable Silverware Organizer, BPA-Free Food-Safe Cutlery Flatware Organizer, Kitchen Utensil Drawer Organizer, Adjustable Silverware Holder for Spoons Forks Knives, Black",
@@ -137,15 +141,17 @@
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/711fUeua6GL._AC_SL1500_.jpg",
-      "asin": "B0F2TB2MMP"
+      "asin": "B0F2TB2MMP",
+      "niche": "home-decor"
     },
     {
-      "title": "bella 2 Slice Slim Toaster, Fits-anywhere™ Kitchenware, 6 Setting Shade Control with Reheat & Cancel Buttons, Fits Sourdough, 10” Long Slot, Anti Jam & Auto Shutoff, 900 Watt, Surf",
+      "title": "bella 2 Slice Slim Toaster, Fits-anywhere\u2122 Kitchenware, 6 Setting Shade Control with Reheat & Cancel Buttons, Fits Sourdough, 10\u201d Long Slot, Anti Jam & Auto Shutoff, 900 Watt, Surf",
       "price": "",
       "rating": 0.0,
       "reviews": 0,
       "image": "https://m.media-amazon.com/images/I/71E8oF06f+L._AC_SL1500_.jpg",
-      "asin": "B0CZPGJ2JW"
+      "asin": "B0CZPGJ2JW",
+      "niche": "tech-gadgets"
     }
   ]
 }
