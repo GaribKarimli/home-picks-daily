@@ -32,16 +32,16 @@ posts.sort((a, b) => {
   description={`Browse our collection of ${nicheInfo.name.toLowerCase()}. ${nicheInfo.description}`}
 >
   <div class="max-w-6xl mx-auto px-4 py-16">
-    <nav class="text-sm text-dark/40 mb-8 font-sans flex flex-wrap items-center gap-x-2 gap-y-1">
-      <a href="/" class="hover:text-brand-500 transition-colors">Home</a>
+    <nav class="text-xs text-secondary mb-8 font-sans flex flex-wrap items-center gap-x-2 gap-y-1">
+      <a href="/" class="hover:text-dark transition-colors">Catalog</a>
       <span>/</span>
-      <a href="/categories/" class="hover:text-brand-500 transition-colors">Categories</a>
+      <a href="/categories/" class="hover:text-dark transition-colors">Categories</a>
       <span>/</span>
-      <span class="text-dark/70 font-medium">{nicheInfo.name}</span>
+      <span class="text-dark font-medium">{nicheInfo.name}</span>
     </nav>
 
     <h1 class="text-3xl md:text-4xl font-display font-bold text-dark mb-2">{nicheInfo.name}</h1>
-    <p class="text-dark/50 mb-12">{nicheInfo.description}</p>
+    <p class="text-secondary mb-12">{nicheInfo.description}</p>
 
     {posts.length > 0 ? (
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -49,9 +49,9 @@ posts.sort((a, b) => {
       </div>
     ) : (
       <div class="text-center py-16">
-        <p class="text-dark/40 text-lg">No products in this niche yet.</p>
-        <p class="text-dark/30 text-sm mt-2">Check back soon for new additions!</p>
-        <a href="/" class="inline-block mt-6 text-accent-500 font-medium hover:text-accent-600 transition-colors">
+        <p class="text-secondary text-lg">No products in this niche yet.</p>
+        <p class="text-secondary text-sm mt-2">Check back soon for new additions!</p>
+        <a href="/" class="inline-block mt-6 text-dark font-medium underline transition-colors">
           &larr; Back to Home
         </a>
       </div>

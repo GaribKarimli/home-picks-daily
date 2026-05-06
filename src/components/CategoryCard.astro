@@ -10,12 +10,12 @@ const { name, slug, description } = Astro.props;
 
 <a
   href={`/?niche=${slug}`}
-  class="block bg-white rounded-2xl p-4 md:p-5 shadow-soft hover:shadow-soft-lg transition-all duration-300 group border border-brand-100/30 text-center"
+  class="block bg-white p-4 md:p-5 hover:shadow-soft transition-shadow duration-300 border border-border text-center"
 >
-  <h3 class="text-sm md:text-base font-display font-semibold text-dark group-hover:text-accent-500 transition-colors">
+  <h3 class="text-sm md:text-base font-display font-semibold text-dark">
     {name}
   </h3>
-  <p class="text-[11px] md:text-xs text-dark/50 mt-1 leading-relaxed line-clamp-2">
+  <p class="text-xs text-secondary mt-1 leading-relaxed line-clamp-2">
     {description}
   </p>
 </a>

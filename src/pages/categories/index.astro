@@ -13,9 +13,9 @@ const categories = [
 <BaseLayout title="Categories" description="Browse our curated niches of trending products.">
   <div class="max-w-6xl mx-auto px-4 py-16">
     <h1 class="text-3xl md:text-4xl font-display font-bold text-dark mb-2">Shop by Niche</h1>
-    <p class="text-dark/50 mb-12">Find what you love across our curated categories.</p>
+    <p class="text-secondary mb-12">Find what you love across our curated categories.</p>
 
-    <div class="grid md:grid-cols-4 gap-6">
+    <div class="grid md:grid-cols-4 gap-4">
       {categories.map(cat => (
         <CategoryCard name={cat.name} slug={cat.slug} description={cat.description} />
       ))}

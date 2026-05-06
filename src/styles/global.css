@@ -7,7 +7,7 @@
 @layer base {
   img {
     @apply object-cover;
-    background-color: #F0F5F2;
+    background-color: #F5F5F0;
   }
 
   img[src=""],
@@ -34,6 +34,6 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-block text-center bg-accent-500 hover:bg-accent-600 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 shadow-soft hover:shadow-soft-lg active:scale-[0.98];
+    @apply inline-block text-center bg-dark text-white font-medium text-sm uppercase tracking-widest py-3 px-8 transition-all duration-300 hover:opacity-90 active:scale-[0.98];
   }
 }

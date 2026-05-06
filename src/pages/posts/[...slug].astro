@@ -13,54 +13,34 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { data } = post;
 const { Content } = await post.render();
-const stars = Math.round(data.rating);
-const isTopRated = data.rating >= 4.5;
 ---
 
 <BaseLayout title={data.title} description={data.description} image={data.image}>
   <article class="max-w-4xl mx-auto px-4 py-10">
-    <nav class="text-sm text-dark/40 mb-8 font-sans flex flex-wrap items-center gap-x-2 gap-y-1">
-      <a href="/" class="hover:text-brand-500 transition-colors">Home</a>
+    <nav class="text-xs text-secondary mb-8 font-sans flex flex-wrap items-center gap-x-2 gap-y-1">
+      <a href="/" class="hover:text-dark transition-colors">Catalog</a>
       <span>/</span>
-      <span class="text-dark/70 font-medium">{data.title}</span>
+      <a href={`/?niche=${data.niche}`} class="hover:text-dark transition-colors">{data.category}</a>
+      <span>/</span>
+      <span class="text-dark font-medium">{data.title}</span>
     </nav>
 
     <div class="grid md:grid-cols-2 gap-10 md:gap-14">
-      <div class="relative rounded-3xl overflow-hidden bg-sage shadow-soft">
+      <div class="overflow-hidden bg-cream">
         <img src={data.image} alt={data.title} class="w-full h-auto object-cover" />
-        {data.trending &&
-          <span class="absolute top-4 right-4 bg-accent-500 text-white text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">Trending Now</span>
-        }
-        {!data.trending && isTopRated &&
-          <span class="absolute top-4 right-4 bg-amber-400 text-white text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">Top Rated</span>
-        }
       </div>
 
       <div class="flex flex-col">
-        <span class="inline-block text-xs font-medium text-brand-600 bg-sage px-3 py-1.5 rounded-full w-fit uppercase tracking-wider">
-          {data.category}
-        </span>
-
         <h1 class="text-3xl md:text-4xl font-display font-bold text-dark mt-4 leading-tight">
           {data.title}
         </h1>
 
-        <div class="flex items-center gap-2 mt-3">
-          <div class="flex text-amber-400/80 text-lg">
-            {Array.from({ length: 5 }, (_, i) => (
-              <span>{i < stars ? '\u2605' : '\u2606'}</span>
-            ))}
-          </div>
-          <span class="text-sm text-dark/40">{data.rating} / 5</span>
-          {data.reviews > 0 && <span class="text-sm text-dark/30">({data.reviews.toLocaleString()} reviews)</span>}
-        </div>
-
-        <p class="text-3xl md:text-4xl font-display font-bold text-brand-500 mt-5">{data.price}</p>
+        <p class="text-3xl md:text-4xl font-display font-bold text-dark mt-5">{data.price}</p>
 
         <ul class="mt-6 space-y-3">
           {data.features.map((feature) => (
-            <li class="flex items-start gap-3 text-dark/60">
-              <svg class="w-5 h-5 text-brand-400 mt-0.5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <li class="flex items-start gap-3 text-secondary">
+              <svg class="w-5 h-5 text-dark mt-0.5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
               </svg>
               {feature}
@@ -73,11 +53,11 @@ const isTopRated = data.rating >= 4.5;
             href={data.amazonLink}
             target="_blank"
             rel="noopener sponsored"
-            class="block w-full text-center bg-accent-500 hover:bg-accent-600 text-white font-medium py-4 px-6 rounded-xl text-lg transition-all duration-300 shadow-soft hover:shadow-soft-lg active:scale-[0.98]"
+            class="block w-full text-center bg-dark text-white font-medium text-sm uppercase tracking-widest py-4 px-6 transition-all duration-300 hover:opacity-90 active:scale-[0.98]"
           >
             Check Price on Amazon &rarr;
           </a>
-          <p class="mt-2 text-xs text-dark/30 text-center">
+          <p class="mt-2 text-xs text-secondary text-center">
             As an Amazon Associate we earn from qualifying purchases.
           </p>
         </div>
@@ -87,10 +67,10 @@ const isTopRated = data.rating >= 4.5;
     <div class="mt-14 md:mt-20 max-w-3xl">
       <div class="prose prose-gray prose-lg max-w-none
         prose-headings:font-display prose-headings:text-dark
-        prose-p:text-dark/60 prose-p:leading-relaxed
-        prose-a:text-accent-500 prose-a:no-underline hover:prose-a:underline
+        prose-p:text-secondary prose-p:leading-relaxed
+        prose-a:text-dark prose-a:no-underline hover:prose-a:underline
         prose-strong:text-dark
-        prose-li:text-dark/60">
+        prose-li:text-secondary">
         <Content />
       </div>
     </div>

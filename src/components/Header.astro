@@ -5,35 +5,19 @@ const links = [
   { href: '/categories/', label: 'Categories' },
   { href: '/about/', label: 'About' },
 ];
-
-const nicheLinks = [
-  { href: '/?niche=home-decor', label: 'Home Decor' },
-  { href: '/?niche=tech-gadgets', label: 'Tech' },
-  { href: '/?niche=fitness-equipment', label: 'Fitness' },
-  { href: '/?niche=kitchen-essentials', label: 'Kitchen' },
-];
 ---
 
-<header class="sticky top-0 z-50 bg-cream/85 backdrop-blur-lg border-b border-brand-100/50">
+<header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md border-b border-border">
   <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="/" class="font-display text-xl font-semibold text-dark tracking-tight">
-      Home <span class="text-brand-400">Finds</span>
+    <a href="/" class="font-display text-lg font-semibold text-dark tracking-tight">
+      Home Finds
     </a>
 
-    <div class="hidden md:flex items-center gap-6">
+    <div class="hidden md:flex items-center gap-8">
       {links.map(link => (
         <a
           href={link.href}
-          class="text-sm font-medium text-dark/60 hover:text-brand-500 transition-colors"
-        >
-          {link.label}
-        </a>
-      ))}
-      <div class="h-4 w-px bg-brand-200 mx-1"></div>
-      {nicheLinks.map(link => (
-        <a
-          href={link.href}
-          class="text-xs font-medium text-dark/40 hover:text-accent-500 transition-colors"
+          class="text-sm font-medium text-secondary hover:text-dark transition-colors"
         >
           {link.label}
         </a>
@@ -41,7 +25,7 @@ const nicheLinks = [
     </div>
 
     <button id="menu-toggle" class="md:hidden p-2 text-dark" aria-label="Toggle menu">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
         <line x1="3" y1="6" x2="21" y2="6"/>
         <line x1="3" y1="12" x2="21" y2="12"/>
         <line x1="3" y1="18" x2="21" y2="18"/>
@@ -49,22 +33,12 @@ const nicheLinks = [
     </button>
   </nav>
 
-  <div id="mobile-menu" class="hidden md:hidden bg-cream border-t border-brand-100/50">
+  <div id="mobile-menu" class="hidden md:hidden bg-cream border-t border-border">
     <div class="px-4 py-4 space-y-3">
       {links.map(link => (
         <a
           href={link.href}
-          class="block text-base font-medium text-dark/60 hover:text-brand-500 transition-colors"
-        >
-          {link.label}
-        </a>
-      ))}
-      <hr class="border-brand-100/50 my-2" />
-      <p class="text-xs text-dark/30 uppercase tracking-widest font-semibold px-1">Niches</p>
-      {nicheLinks.map(link => (
-        <a
-          href={link.href}
-          class="block text-sm font-medium text-dark/40 hover:text-accent-500 transition-colors px-1"
+          class="block text-base font-medium text-secondary hover:text-dark transition-colors"
         >
           {link.label}
         </a>
@@ -76,8 +50,6 @@ const nicheLinks = [
 <script>
   document.getElementById('menu-toggle')?.addEventListener('click', () => {
     const menu = document.getElementById('mobile-menu');
-    if (menu) {
-      menu.classList.toggle('hidden');
-    }
+    if (menu) menu.classList.toggle('hidden');
   });
 </script>
