@@ -9,8 +9,8 @@ features:
   - "Premium quality"
   - "Top-rated design"
   - "Durable materials"
-rating: 0.0
-reviews: 0
+rating: 4.2
+reviews: 66105
 date: 2026-05-06
 description: "Discover the Amazon Echo Show 5 (newest model), Smart display, Designed for Alexa+, 2x the bass and clearer sound, Glacier White - the perfect addition to your collection."
 trending: false
