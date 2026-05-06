@@ -152,21 +152,172 @@ def _fallback_post(product: dict, niche: str) -> dict:
     niche_name = NICHE_DISPLAY.get(niche, "Home & Kitchen")
     slug = _to_slug(product["title"])
     amazon_link = f"https://www.amazon.com/dp/{product['asin']}/?tag={Config.AMAZON_TAG}"
+    title = product["title"]
+    desc = f"Elevate your {niche_name.lower()} with this thoughtfully designed product."
+    body = _generate_fallback_body(title, niche_name)
     return {
-        "title": product["title"],
+        "title": title,
         "slug": slug,
         "image": product["image"],
         "price": product["price"],
         "amazonLink": amazon_link,
         "niche": niche,
         "category": niche_name,
-        "features": ["Premium quality", "Top-rated design", "Durable materials"],
+        "features": _generate_fallback_features(title, niche_name),
         "rating": product["rating"],
         "reviews": product.get("reviews", 0),
         "date": date.today().isoformat(),
-        "description": f"Discover the {product['title']} - the perfect addition to your collection.",
-        "body": f"Write your product description here for {product['title']}...",
+        "description": desc,
+        "body": body,
     }
+
+
+def _generate_fallback_features(title: str, niche: str) -> list[str]:
+    t = title.lower()
+    features = []
+    if "set" in t or "kit" in t or "pcs" in t or "piece" in t:
+        features.append(f"Complete {niche.lower()} set with multiple pieces")
+    if "stainless" in t or "steel" in t:
+        features.append("Crafted from premium stainless steel for lasting durability")
+    if "non-stick" in t or "nonstick" in t:
+        features.append("Non-stick surface for effortless cooking and easy cleaning")
+    if "silicone" in t:
+        features.append("Food-grade silicone, heat-resistant up to high temperatures")
+    if "bamboo" in t:
+        features.append("Sustainable bamboo construction, naturally anti-bacterial")
+    if "digital" in t or "smart" in t or "display" in t:
+        features.append("Advanced digital interface for precise control")
+    if "portable" in t or "compact" in t or "small" in t:
+        features.append("Space-saving compact design, perfect for any kitchen")
+    if "organizer" in t or "storage" in t or "holder" in t:
+        features.append("Smart organization solution for a clutter-free space")
+    if "cleaner" in t or "steam" in t or "mop" in t:
+        features.append("Powerful cleaning performance for a sparkling home")
+    if "blender" in t or "mixer" in t or "chopper" in t:
+        features.append("Powerful motor for effortless blending and mixing")
+    if "toaster" in t:
+        features.append("Even toasting with adjustable shade settings")
+    if "scale" in t:
+        features.append("Accurate measurements for precise cooking and baking")
+    if "echo" in t or "alexa" in t:
+        features.append("Voice-controlled smart display with Alexa built-in")
+    if "grinder" in t or "salt" in t or "pepper" in t:
+        features.append("Adjustable coarseness for the perfect grind every time")
+    if "parchment" in t or "paper" in t:
+        features.append("Unbleached, non-stick surface for healthy baking")
+    if "sponge" in t:
+        features.append("Odor-resistant and long-lasting for daily kitchen use")
+    if "sprayer" in t or "dispenser" in t or "oil" in t:
+        features.append("Precise dispensing for controlled portioning")
+    if not features:
+        features.append(f"Premium quality {niche.lower()} product")
+        features.append("Designed for everyday convenience and lasting performance")
+    if len(features) < 4:
+        features.append("Easy to clean and maintain for long-term use")
+        features.append(f"Versatile design that complements any {niche.lower()} style")
+    return features[:5]
+
+
+def _generate_fallback_body(title: str, niche: str) -> str:
+    t = title.lower()
+    paragraphs = []
+    if "organizer" in t or "storage" in t or "holder" in t or "caddy" in t:
+        paragraphs.append(
+            f"Transform your space with the {title}. "
+            f"This thoughtfully designed organizer brings both style and functionality to your daily routine. "
+            f"Built with quality materials and a keen eye for detail, it helps you maintain a tidy, clutter-free environment effortlessly."
+        )
+        paragraphs.append(
+            f"Whether you are tidying up your countertops or organizing your cabinets, "
+            f"this solution adapts to your needs. "
+            f"Its sleek design blends seamlessly with any decor, making organization a pleasure rather than a chore."
+        )
+    elif "cleaner" in t or "steam" in t or "mop" in t or "scrub" in t:
+        paragraphs.append(
+            f"Meet the {title} \u2014 your new go-to for effortless cleaning. "
+            f"Designed to tackle tough dirt and grime, this powerful tool makes household cleaning faster and more effective. "
+            f"From kitchen counters to bathroom tiles, it delivers sparkling results every time."
+        )
+        paragraphs.append(
+            f"With user-friendly features and durable construction, this cleaning essential "
+            f"is built to last. Save time and energy while achieving professional-level cleanliness throughout your home."
+        )
+    elif "blender" in t or "mixer" in t or "chopper" in t or "cooker" in t or "toaster" in t:
+        paragraphs.append(
+            f"The {title} is here to simplify your time in the kitchen. "
+            f"Whether you are preparing a quick breakfast or an elaborate dinner, this appliance delivers consistent, reliable results. "
+            f"Its intuitive design makes it easy for anyone to use, from beginners to seasoned home cooks."
+        )
+        paragraphs.append(
+            f"Compact yet powerful, it takes up minimal counter space while offering maximum performance. "
+            f"Elevate your cooking experience with a tool that works as hard as you do."
+        )
+    elif "echo" in t or "alexa" in t or "smart" in t or "display" in t:
+        paragraphs.append(
+            f"Experience the convenience of the {title}. "
+            f"With voice control, smart home integration, and a vibrant display, this device puts information and entertainment at your fingertips. "
+            f"Perfect for busy households looking to streamline their daily routines."
+        )
+        paragraphs.append(
+            f"From setting timers and playing music to controlling compatible smart devices, "
+            f"it is like having a personal assistant in every room."
+        )
+    elif "scale" in t or "digital" in t:
+        paragraphs.append(
+            f"The {title} combines precision with elegant design. "
+            f"Whether you are weighing ingredients for a recipe or tracking portions, this scale delivers accurate readings every time. "
+            f"Its sleek profile looks beautiful on any countertop."
+        )
+        paragraphs.append(
+            f"Features include a clear LCD display, easy-to-use controls, and multiple measurement units. "
+            f"A must-have tool for anyone who loves to cook or bake."
+        )
+    elif "bowl" in t or "utensil" in t or "knife" in t or "cutting" in t:
+        paragraphs.append(
+            f"Upgrade your kitchen with the {title}. "
+            f"Made from high-quality materials, this set is designed to withstand daily use while maintaining its beautiful appearance. "
+            f"Each piece is crafted with care to ensure comfort and functionality."
+        )
+        paragraphs.append(
+            f"Whether you are prepping ingredients or serving a meal, "
+            f"this collection makes every task easier and more enjoyable."
+        )
+    elif "grinder" in t or "salt" in t or "pepper" in t or "spice" in t:
+        paragraphs.append(
+            f"Elevate your seasoning game with the {title}. "
+            f"Featuring an adjustable ceramic grinding mechanism, it lets you customize the coarseness of your spices with ease. "
+            f"The elegant design looks stunning on any dining table or kitchen counter."
+        )
+        paragraphs.append(
+            f"Durable and refillable, this grinder is built to last. "
+            f"Freshly ground spices make every meal more flavorful."
+        )
+    elif "pan" in t or "pot" in t or "cookware" in t or "pots" in t:
+        paragraphs.append(
+            f"The {title} brings professional-grade cooking to your home kitchen. "
+            f"Crafted from premium materials with a non-stick surface, this cookware set ensures even heating and effortless food release. "
+            f"Designed for durability and everyday performance."
+        )
+        paragraphs.append(
+            f"Compatible with all stovetops including induction, this set includes everything you need to prepare delicious meals. "
+            f"Easy to clean and dishwasher safe for added convenience."
+        )
+    else:
+        paragraphs.append(
+            f"Discover the {title} \u2014 a carefully selected product designed to enhance your daily life. "
+            f"Combining quality craftsmanship with thoughtful design, it delivers the perfect balance of style and functionality. "
+            f"Whether you are upgrading your home or looking for a thoughtful gift, this product is an excellent choice."
+        )
+        paragraphs.append(
+            f"Built to last and easy to maintain, it is a reliable addition to your home. "
+            f"Experience the difference that quality makes."
+        )
+
+    paragraphs.append(
+        f"Click the link above to check the current price and availability on Amazon. "
+        f"Read customer reviews to see why this product is trending."
+    )
+    return "\n\n".join(paragraphs)
 
 
 def _parse_response(text: str, product: dict, niche: str) -> dict:
