@@ -1,7 +1,7 @@
 ---
 title: "Magic Bullet Blender, Small, Silver, 11 Piece Set"
 image: "https://m.media-amazon.com/images/I/61w2Tj7r0BL._AC_SL1500_.jpg"
-price: "AZN59.48"
+price: "$34.99"
 amazonLink: "https://www.amazon.com/dp/B012T634SM/?tag=dummy-20"
 niche: "fitness-equipment"
 category: "Fitness Equipment"

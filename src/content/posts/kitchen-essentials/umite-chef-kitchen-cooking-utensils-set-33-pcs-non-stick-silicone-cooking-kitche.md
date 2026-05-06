@@ -1,7 +1,7 @@
 ---
 title: "Umite Chef Kitchen Cooking Utensils Set, 33 pcs Non-Stick Silicone Cooking Kitchen Utensils Spatula Set with Holder, Wooden Handle Silicone Kitchen Gadgets Utensil Set (Khaki)"
 image: "https://m.media-amazon.com/images/I/615CbF7dxCL._AC_SL1500_.jpg"
-price: "AZN37.38"
+price: "$21.99"
 amazonLink: "https://www.amazon.com/dp/B08573DQ39/?tag=dummy-20"
 niche: "kitchen-essentials"
 category: "Kitchen Essentials"
