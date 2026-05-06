@@ -76,18 +76,26 @@ def _parse_retry_delay(msg: str) -> float | None:
 
 
 def generate_post(product: dict, niche: str) -> dict:
+    # 1) Try Amazon scraping first (always available, no API key needed)
+    result = _try_amazon_description(product, niche)
+    if result:
+        return result
+
     prompt = _build_product_prompt(product, niche)
 
+    # 2) Try Groq
     if Config.GROQ_API_KEY:
         result = _try_groq(prompt, product, niche)
         if result:
             return result
 
+    # 3) Try Gemini
     if Config.GEMINI_API_KEY:
         result = _try_gemini(prompt, product, niche)
         if result:
             return result
 
+    # 4) Template-based fallback
     print(f"  [~] No LLM available. Using fallback content for: {product['title']}")
     return _fallback_post(product, niche)
 
@@ -146,6 +154,60 @@ def _try_gemini(prompt: str, product: dict, niche: str) -> Optional[dict]:
             return None
 
     return None
+
+
+def _try_amazon_description(product: dict, niche: str) -> Optional[dict]:
+    asin = product.get("asin", "")
+    if not asin:
+        return None
+    url = f"https://www.amazon.com/dp/{asin}"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+    try:
+        import requests
+        from bs4 import BeautifulSoup
+        resp = requests.get(url, headers=headers, timeout=10)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "lxml")
+        desc_el = None
+        for sel in ["#productDescription", "#feature-bullets"]:
+            desc_el = soup.select_one(sel)
+            if desc_el:
+                break
+        if not desc_el:
+            return None
+        body = desc_el.get_text(strip=True, separator=" ")
+        body = re.sub(r"\s+", " ", body).strip()
+        if len(body) < 100:
+            return None
+        print(f"  [~] Using Amazon description for: {product['title']}")
+        return _build_post(product, niche, body)
+    except Exception:
+        return None
+
+
+def _build_post(product: dict, niche: str, body: str) -> dict:
+    niche_name = NICHE_DISPLAY.get(niche, "Home & Kitchen")
+    slug = _to_slug(product["title"])
+    amazon_link = f"https://www.amazon.com/dp/{product['asin']}/?tag={Config.AMAZON_TAG}"
+    description = body[:160].rsplit(" ", 1)[0] + "..." if len(body) > 160 else body
+    return {
+        "title": product["title"],
+        "slug": slug,
+        "image": product["image"],
+        "price": product["price"],
+        "amazonLink": amazon_link,
+        "niche": niche,
+        "category": niche_name,
+        "features": _generate_fallback_features(product["title"], niche_name),
+        "rating": product["rating"],
+        "reviews": product.get("reviews", 0),
+        "date": date.today().isoformat(),
+        "description": description,
+        "body": body,
+    }
 
 
 def _fallback_post(product: dict, niche: str) -> dict:

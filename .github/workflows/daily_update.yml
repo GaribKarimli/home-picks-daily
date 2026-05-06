@@ -14,6 +14,7 @@ jobs:
 
     env:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       AMAZON_TAG: ${{ secrets.AMAZON_TAG }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       REPO_PATH: GaribKarimli/home-picks-daily

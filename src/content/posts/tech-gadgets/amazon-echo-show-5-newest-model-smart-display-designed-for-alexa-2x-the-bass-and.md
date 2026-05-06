@@ -13,12 +13,8 @@ features:
 rating: 4.2
 reviews: 66105
 date: 2026-05-06
-description: "Elevate your tech gadgets with this thoughtfully designed product."
+description: "Alexa can show you more - Echo Show 5 includes a 5.5” display so you can see news and weather at a glance, make video calls, view compatible cameras, stream..."
 trending: false
 ---
 
-Experience the convenience of the Amazon Echo Show 5 (newest model), Smart display, Designed for Alexa+, 2x the bass and clearer sound, Glacier White. With voice control, smart home integration, and a vibrant display, this device puts information and entertainment at your fingertips. Perfect for busy households looking to streamline their daily routines.
-
-From setting timers and playing music to controlling compatible smart devices, it is like having a personal assistant in every room.
-
-Click the link above to check the current price and availability on Amazon. Read customer reviews to see why this product is trending.
+Alexa can show you more - Echo Show 5 includes a 5.5” display so you can see news and weather at a glance, make video calls, view compatible cameras, stream music and shows, and more. Small size, bigger sound – Stream your favorite music, shows, podcasts, and more from providers like Amazon Music, Spotify, and Prime Video—now with deeper bass and clearer vocals. Includes a 5.5" display so you can view shows, song titles, and more at a glance. Keep your home comfortable – Control compatible smart devices like lights and thermostats, even while you're away. See more with the built-in camera – Check in on your family, pets, and more using the built-in camera. Drop in on your home when you're out or view the front door from your Echo Show 5 with compatible video doorbells. See your photos on display – When not in use, set the background to a rotating slideshow of your favorite photos. Invite family and friends to share photos to your Echo Show. Prime members also get unlimited cloud photo storage. Stay connected with video calling – Use the 2 MP camera to call friends and family who have the Alexa app or an Echo device with a screen. Make announcements to other compatible devices in your home. Designed to protect your privacy — Amazon is not in the business of selling your personal information to others. Built with multiple layers of privacy controls including a mic/camera off button and built-in camera shutter, as well as support for viewing end-to-end encrypted Ring video. Designed for sustainability – This device’s fabric is made from 100% post-consumer recycled polyester yarn and aluminum is made from 100% recycled aluminum. The device packaging is 100% recyclable.  See more product details
