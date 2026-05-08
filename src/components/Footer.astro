@@ -3,43 +3,45 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-dark text-secondary mt-20">
-  <div class="max-w-6xl mx-auto px-4 py-16">
-    <div class="grid md:grid-cols-3 gap-10">
+<footer class="bg-dark text-secondary mt-24">
+  <div class="max-w-7xl mx-auto px-6 py-16 md:py-20">
+    <div class="grid md:grid-cols-3 gap-12 md:gap-16">
       <div>
-        <h3 class="text-xl font-display font-semibold text-white mb-3">
+        <h3 class="text-lg font-display font-semibold text-white mb-4">
           Home Finds
         </h3>
-        <p class="text-sm leading-relaxed">
+        <p class="text-sm leading-relaxed text-secondary/80 max-w-xs">
           Trending products across home decor, tech, fitness, and kitchen — curated daily.
         </p>
       </div>
 
-      <div>
-        <h4 class="text-xs font-semibold text-white uppercase tracking-widest mb-4">Quick Links</h4>
-        <ul class="space-y-2.5 text-sm">
-          <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
-          <li><a href="/categories/" class="hover:text-white transition-colors">Categories</a></li>
-          <li><a href="/about/" class="hover:text-white transition-colors">About</a></li>
-        </ul>
-      </div>
+      <div class="grid grid-cols-2 gap-8 md:gap-16 md:col-span-2">
+        <div>
+          <h4 class="text-xs font-semibold text-white uppercase tracking-[0.15em] mb-5">Quick Links</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="/" class="text-secondary/70 hover:text-white transition-colors duration-300">Home</a></li>
+            <li><a href="/categories/" class="text-secondary/70 hover:text-white transition-colors duration-300">Categories</a></li>
+            <li><a href="/about/" class="text-secondary/70 hover:text-white transition-colors duration-300">About</a></li>
+          </ul>
+        </div>
 
-      <div>
-        <h4 class="text-xs font-semibold text-white uppercase tracking-widest mb-4">Niches</h4>
-        <ul class="space-y-2.5 text-sm">
-          <li><a href="/categories/home-decor/" class="hover:text-white transition-colors">Home Decor</a></li>
-          <li><a href="/categories/tech-gadgets/" class="hover:text-white transition-colors">Tech Gadgets</a></li>
-          <li><a href="/categories/fitness-equipment/" class="hover:text-white transition-colors">Fitness Equipment</a></li>
-          <li><a href="/categories/kitchen-essentials/" class="hover:text-white transition-colors">Kitchen Essentials</a></li>
-        </ul>
+        <div>
+          <h4 class="text-xs font-semibold text-white uppercase tracking-[0.15em] mb-5">Niches</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="/categories/home-decor/" class="text-secondary/70 hover:text-white transition-colors duration-300">Home Decor</a></li>
+            <li><a href="/categories/tech-gadgets/" class="text-secondary/70 hover:text-white transition-colors duration-300">Tech Gadgets</a></li>
+            <li><a href="/categories/fitness-equipment/" class="text-secondary/70 hover:text-white transition-colors duration-300">Fitness Equipment</a></li>
+            <li><a href="/categories/kitchen-essentials/" class="text-secondary/70 hover:text-white transition-colors duration-300">Kitchen Essentials</a></li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div class="mt-12 pt-8 border-t border-secondary/20 text-xs leading-relaxed space-y-3">
+    <div class="mt-14 pt-8 border-t border-secondary/10 text-xs text-secondary/60 leading-relaxed space-y-3">
       <p>
         Home Finds is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. As an Amazon Associate, we earn from qualifying purchases.
       </p>
-      <p>
+      <p class="text-secondary/40">
         &copy; {year} Home Finds. All rights reserved.
       </p>
     </div>
