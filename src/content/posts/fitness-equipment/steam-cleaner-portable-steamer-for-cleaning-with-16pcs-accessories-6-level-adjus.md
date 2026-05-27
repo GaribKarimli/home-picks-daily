@@ -13,7 +13,7 @@ features:
   - "Versatile design that complements any fitness equipment style"
 rating: 4.1
 reviews: 794
-date: 2026-05-26
+date: 2026-05-27
 description: "About this item Powerful Steam Cleaner: This steam cleaner heats up in just 15 seconds, releasing high-temperature steam at 221°F (105°C) and 3 bar of..."
 trending: false
 ---

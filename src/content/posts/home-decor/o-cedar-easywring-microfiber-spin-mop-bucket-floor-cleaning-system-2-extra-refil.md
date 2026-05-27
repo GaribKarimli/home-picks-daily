@@ -11,7 +11,7 @@ features:
   - "Versatile design that complements any home decor style"
 rating: 4.6
 reviews: 141592
-date: 2026-05-26
+date: 2026-05-27
 description: "Enjoy a fast and fun floor cleaning experience! The O-Cedar EasyWring Spin Mop and Bucket Cleaning System features hands-free wringing thanks to our unique..."
 trending: false
 ---
