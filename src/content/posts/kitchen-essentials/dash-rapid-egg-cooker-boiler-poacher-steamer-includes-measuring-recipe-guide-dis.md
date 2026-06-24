@@ -12,7 +12,7 @@ features:
   - "Versatile design that complements any kitchen essentials style"
 rating: 4.6
 reviews: 135408
-date: 2026-06-23
+date: 2026-06-24
 description: "About this item Eggs in a Dash: Use the Dash Rapid Egg Cooker to make hard-boiled eggs, soft-boiled eggs, poached eggs, scrambled eggs, and individual omelets,..."
 trending: false
 ---
