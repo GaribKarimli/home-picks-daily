@@ -12,7 +12,7 @@ features:
   - "Versatile design that complements any tech gadgets style"
 rating: 4.3
 reviews: 15132
-date: 2026-06-29
+date: 2026-06-30
 description: "About this item Slim Design, Big Impact: With a sleek 3.58" profile, the bella 2-Slice Slim Toaster fits comfortably on any countertop without taking up much..."
 trending: false
 ---
