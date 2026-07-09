@@ -12,7 +12,7 @@ features:
   - "Versatile design that complements any home decor style"
 rating: 5.0
 reviews: 0
-date: 2026-07-08
+date: 2026-07-09
 description: "Meet the Infinity Sponge from Ivana Designs, the last sponge you'll ever need to buy! Powered by pure silver fibers, this game-changing sponge doesn't just..."
 trending: false
 ---
