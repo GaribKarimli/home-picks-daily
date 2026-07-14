@@ -12,7 +12,7 @@ features:
   - "Odor-resistant and long-lasting for daily kitchen use"
 rating: 4.4
 reviews: 12673
-date: 2026-07-13
+date: 2026-07-14
 description: "About this item 【ROTATABLE SPOUT】This kitchen sink caddy comes with a rotatable spout that swivels in three directions so that the water in the sponge can be..."
 trending: false
 ---
