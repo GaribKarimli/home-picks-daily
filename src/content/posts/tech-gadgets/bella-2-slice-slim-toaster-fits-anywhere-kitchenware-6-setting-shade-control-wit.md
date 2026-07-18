@@ -12,7 +12,7 @@ features:
   - "Versatile design that complements any tech gadgets style"
 rating: 4.3
 reviews: 15132
-date: 2026-07-17
+date: 2026-07-18
 description: "Introducing the bella 2-Slice Slim Toaster, where innovative design meets ultimate functionality. With a unique 10-inch long slot, this bagel toaster..."
 trending: false
 ---
