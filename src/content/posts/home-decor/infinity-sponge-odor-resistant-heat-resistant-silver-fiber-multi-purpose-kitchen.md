@@ -12,7 +12,7 @@ features:
   - "Versatile design that complements any home decor style"
 rating: 5.0
 reviews: 0
-date: 2026-08-19
+date: 2026-08-20
 description: "Elevate your home decor with this thoughtfully designed product."
 trending: false
 ---
