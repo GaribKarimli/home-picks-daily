@@ -12,7 +12,7 @@ features:
   - "Odor-resistant and long-lasting for daily kitchen use"
 rating: 4.4
 reviews: 12673
-date: 2026-08-28
+date: 2026-08-29
 description: "Elevate your home decor with this thoughtfully designed product."
 trending: false
 ---
