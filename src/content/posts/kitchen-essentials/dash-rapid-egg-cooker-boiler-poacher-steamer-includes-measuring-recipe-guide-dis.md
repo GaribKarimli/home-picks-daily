@@ -13,8 +13,8 @@ features:
 rating: 4.6
 reviews: 135408
 date: 2026-10-09
-description: "The Dash Rapid Egg Cooker takes the guesswork out of eggs. Fill the Measuring Cup to the line for your style. The water level sets the timing, so every batch..."
+description: "About this item Eggs in a Dash: This hard boiled egg cooker makes up to 7 eggs at once — soft-boiled, medium, or hard-boiled eggs are ready in minutes, no pot..."
 trending: false
 ---
 
-The Dash Rapid Egg Cooker takes the guesswork out of eggs. Fill the Measuring Cup to the line for your style. The water level sets the timing, so every batch comes out just right, plus there is no stove to watch. Meal-prep hard-boiled eggs for the week. Whip up deviled eggs or egg salad. Poach eggs for avocado toast, soft-boil for ramen, or make an omelette for one. The built-in Pin pierces each shell to prevent cracking; a quick cold-water soak makes peeling easy. When you're done, the trays and bowl nest under the locking Lid for compact storage. From quick weekday breakfasts to weekend brunch, it's an easy upgrade for any small kitchen.
+About this item Eggs in a Dash: This hard boiled egg cooker makes up to 7 eggs at once — soft-boiled, medium, or hard-boiled eggs are ready in minutes, no pot of boiling water needed and no stovetop babysitting Egg Poacher and Omelette Maker: Use the Poaching Tray to make poached eggs for Eggs Benedict, avocado toast, and more, or use the Omelette Bowl to whip up a quick frittata for busy mornings Auto Shut-Off Egg Steamer: This egg steamer for hard boiled eggs uses a thermal sensor that shuts off and chimes when the water evaporates, so eggs never overcook and every batch comes out just right Mini Egg Cooker, Big Style: This small egg cooker comes in colors to match your kitchen and fits any countertop, dorm room, or RV; perfect for a quick protein-packed breakfast or easy meal prep Get Crackin': Includes a Boiling Tray, Poaching Tray, Omelette Bowl, Measuring Cup with egg-piercing Pin & Recipe Guide; all the accessories nest inside for compact, clutter-free storage › See more product details
