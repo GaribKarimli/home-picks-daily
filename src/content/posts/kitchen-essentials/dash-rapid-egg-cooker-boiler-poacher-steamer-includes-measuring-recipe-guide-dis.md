@@ -12,7 +12,7 @@ features:
   - "Versatile design that complements any kitchen essentials style"
 rating: 4.6
 reviews: 135408
-date: 2026-10-09
+date: 2026-10-10
 description: "About this item Eggs in a Dash: This hard boiled egg cooker makes up to 7 eggs at once — soft-boiled, medium, or hard-boiled eggs are ready in minutes, no pot..."
 trending: false
 ---
