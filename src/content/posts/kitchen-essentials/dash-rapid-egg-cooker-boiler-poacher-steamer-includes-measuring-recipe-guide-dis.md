@@ -12,7 +12,7 @@ features:
   - "Versatile design that complements any kitchen essentials style"
 rating: 4.6
 reviews: 135408
-date: 2026-10-24
+date: 2026-10-25
 description: "The Dash Rapid Egg Cooker takes the guesswork out of eggs. Fill the Measuring Cup to the line for your style. The water level sets the timing, so every batch..."
 trending: false
 ---
