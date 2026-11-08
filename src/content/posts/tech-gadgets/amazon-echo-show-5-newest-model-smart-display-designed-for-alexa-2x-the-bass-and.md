@@ -12,7 +12,7 @@ features:
   - "Versatile design that complements any tech gadgets style"
 rating: 4.2
 reviews: 66105
-date: 2026-11-07
+date: 2026-11-08
 description: "An Alexa with screen - Echo Show 5 includes a 5.5” smart screen so you can see news and weather at a glance, make video calls, view compatible cameras, stream..."
 trending: false
 ---
