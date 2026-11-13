@@ -13,7 +13,7 @@ features:
   - "Versatile design that complements any fitness equipment style"
 rating: 4.1
 reviews: 794
-date: 2026-11-12
+date: 2026-11-13
 description: "Elevate your fitness equipment with this thoughtfully designed product."
 trending: false
 ---
